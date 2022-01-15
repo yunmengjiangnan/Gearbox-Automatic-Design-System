@@ -196,4 +196,4 @@ float_B = R * phi_R
 B = round(float_B)
 print('B =', float_B)
 print('取整B =', B)
-# B_1 =
+B_1 =
