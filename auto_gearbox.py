@@ -6,9 +6,7 @@
 import math
 import numpy as np
 from math import cos, pi, sqrt
-import motor as mt
-import gear_ratio as gr
-import transmission_parameters as tp
+
 # 已知条件
 F = 5
 v = 0.8
@@ -20,13 +18,28 @@ t = 10 * 300 * 12
 print('工作寿命：t=10×300×12h=3.6×10^4 h')
 # 三、电动机的选择
 # 1、工作机输出功率P_W
-P_W = mt.Output_Power(F, v)
+P_W = (F * 1000 * v) / 1000
+print('工作机输出功率P_W =', P_W, 'KW')
+
 # 2、输送链小链轮转速 n
-n = mt.Sprocket_Speed(d, v)
+c = pi * d
+n = (c * 60) / (0.8 * 1000)
+print('∴转速 n=(c×60)/(0.8×1000)r/min=', n, 'r/min')
+
 # 3、传动效率η
-eta = mt.Transmission_Efficiency()
+eta_1 = 0.96
+eta_2 = 0.98
+eta_3 = 0.96
+eta_4 = 0.99
+eta_5 = 0.98
+eta_w = 0.96
+eta = eta_1 * eta_2 * eta_3 * eta_4 * eta_5 * eta_w
+print('总传动效率η =', eta, 'KW')
+
 # 4、电动机输入功率P_d
-P_d = mt.Input_Power(P_W, eta)
+P_d = P_W / eta
+print('P_d=P_w/η =', P_d, 'KW')
+
 # 5、电动机的选择
 print('选YX3系列132S-4型号电动机，主要技术数据如下：'
       '\n额定功率：5.5 kw'
@@ -34,19 +47,41 @@ print('选YX3系列132S-4型号电动机，主要技术数据如下：'
 
 # 四、传动装置的总传动比及其分配
 # 1、系统总传动比i
-i = gr.Total_Gear_Ratio(n)
+i = 1440 / n
+print('系统总传动比i: ', i)
+
 # 2、分配传动比(圆锥齿轮传动i_1/圆柱齿轮传动i_2/链传动i_3)
 i_1 = 2
 i_2 = 6
-i_3 = gr.Transmission_Ratio_Assignment(i, i_1, i_2)
+i_3 = i / i_1 / i_2
+print('圆锥齿轮传动i_1 =', i_1,
+      '\n圆柱齿轮传动i_2 =', i_2,
+      '\n链传动i_3 = ', i_3)
 
 # 五、计算传动装置的运动和动力参数
 # 1、各轴转速n（r/min）
-n_1, n_2, n_3 = tp.Shaft_Speed(i_1, i_2)
+n_1 = 1440
+n_2 = n_1 / i_1
+n_3 = n_2 / i_2
+print('n_1 =', n_1,
+      '\nn_2 =', n_2,
+      '\nn_3 =', n_3)
+
 # 2、各轴输入功率P（kW）
-P_1, P_2, P_3 = tp.Input_Power(P_d)
+P_1 = P_d * eta_4 * eta_5
+P_2 = P_1 * eta_1 * eta_5
+P_3 = P_2 * eta_2 * eta_5
+print('P_1 =', P_1, 'kW'
+                    '\nP_2 =', P_2, 'kW'
+                                    '\nP_3 =', P_3, 'kW')
+
 # 3、各轴输入转矩T（N•ｍ）
-T_1, T_2, T_3 = tp.Input_Torque(P_1, P_2, P_3, n_1, n_2, n_3)
+T_1 = 9550 * P_1 / n_1
+T_2 = 9550 * P_2 / n_2
+T_3 = 9550 * P_3 / n_3
+print('T_1 =', T_1, 'N·m',
+      '\nT_2 =', T_2, 'N·m',
+      '\nT_3 =', T_3, 'N·m')
 
 # 六、齿轮传动的设计计算
 print('#########六、齿轮传动的设计计算#########')
@@ -161,4 +196,4 @@ float_B = R * phi_R
 B = round(float_B)
 print('B =', float_B)
 print('取整B =', B)
-# B_1 =
+B_1 =

@@ -20,6 +20,7 @@ def Sprocket_Speed(D, V):
     n = (c * 60) / (V * 1000)
     print('输送链链轮节圆周长：c =', c)
     print('∴转速 n=(c×60)/(', V, '×1000)r/min=', n, 'r/min')
+    return n
 
 
 # 3、传动效率η
@@ -39,6 +40,7 @@ def Transmission_Efficiency():
 def Input_Power(P_W, ETA):
     P_d = P_W / ETA
     print('P_d=P_w/η =', P_d, 'KW')
+    return P_d
 
 
 # 5、电动机的选择
@@ -51,10 +53,15 @@ if __name__ == '__main__':
     F = 5
     v = 0.8
     d = 390
+    # 1、工作机输出功率P_W
     P_W = Output_Power(F, v)
+    # 2、输送链小链轮转速 n
     Sprocket_Speed(d, v)
+    # 3、传动效率η
     eta = Transmission_Efficiency()
+    # 4、电动机输入功率P_d
     Input_Power(P_W, eta)
+    # 5、电动机的选择
     print('选YX3系列132S-4型号电动机，主要技术数据如下：'
           '\n额定功率：5.5 kw'
           '\n满载转速：1440r/min')
