@@ -1,4 +1,4 @@
-# -*- coding = utf-8 -*-
+# encoding:utf-8
 # @Time : 2022/1/16 12:15
 # @Author : Mahx2019
 
@@ -25,16 +25,41 @@
 
 class MS:
     '''
-    声明一个材料选择的类
-    MS:material selection
-    '''
+    材料选择的类
+    MS:Material Selection
+    self.__materialBox:最好使用的材料及参数，['代号名','材料名','强度极限','最小硬度','最大硬度']
+    self.name:材料名称
+    self.sigma_s:材料强度极限
 
-    __material = [
-        ['M0','45钢（调质）','650'],
-        ['M1','45钢（正火）','580'],
-        ['M2','20Cr（渗碳后淬火）','650'],
-        ['M3','40Cr（调质）','700'],
-        ['M4','20CrMnTi（渗碳后淬火）','1100']
+    '''
+    __material = input(
+'''材料的选择：
+    <编号><材料名称>
+    M0:   45钢（调质）
+    M1:   45钢（正火）
+    M2:   20Cr（渗碳后淬火）
+    M3:   40Cr（调质）
+    M4:   20CrMnTi（渗碳后淬火）
+请键入编号：''')
+
+    __materialBox = [
+        ['M0','45钢（调质）',650,217,255],
+        ['M1','45钢（正火）',580,162,217],
+        ['M2','20Cr（渗碳后淬火）',650,300,30   0],
+        ['M3','40Cr（调质）',700,241,286],
+        ['M4','20CrMnTi（渗碳后淬火）',1100,300,300]
     ]
-    def __init__(self, material):
-        self.__material = material
+    name = ''
+    sigma_s = 0
+    hardnessMin = 0
+    hardnessMax = 0
+
+    def __init__(self):
+
+        for i in range(len(self.__materialBox)):
+            if self.__materialBox[i][0] == self.__material:
+                self.name, self.sigma_s = self.__materialBox[i][1], self.__materialBox[i][2]
+                self.hardnessMin,self.hardnessMax = self.__materialBox[i][3], self.__materialBox[i][4]
+                
+        if self.name == '':
+            return print('请输入正确的编号')
