@@ -62,20 +62,42 @@ print('######(一)高速级锥齿轮传动：########'
 bevel_gear_D = gd.BevelGear.DesignAccordingToToothSurfaceContactStrength(i_1=2, T_1=30.595749463944532, n_1=1440)
 # 2)调整小齿轮分度圆直径
 print('#####2)调整小齿轮分度圆直径#####')
-bevel_gear_D.Tooth_Contact_Strength_Design(n_1=1440)
+R = bevel_gear_D.Tooth_Contact_Strength_Design(n_1=1440)
 # 3）计算载荷系数
 print('########3）计算载荷系数########')
-bevel_gear_D.Load_Factor()
+m_1, d_1 = bevel_gear_D.Load_Factor()
 # 3、校核齿根弯曲强度
 print('##########3、校核齿根弯曲强度########')
 # 1）确定公式中各计算数值
 print('#####1）确定公式中各计算数值#####')
 bevel_gear_C = gd.BevelGear.CheckToothRootBendingStrength(Z_1=16, Z_2=48, mu=2)
 # 2）代入数值计算
-bevel_gear_C.Substitution_Calculation_1(T_1=30.595749463944532, phi_R=1 / 3, d_1=32.0042098044378, m=2)
+m_2 = bevel_gear_C.Substitution_Calculation_1(T_1=30.595749463944532, phi_R=1 / 3, d_1=32.0042098044378, m=2)
 # ３）代入数值计算
-bevel_gear_C.Substitution_Calculation_2(m=2, phi_R=1 / 3)
+m = max(m_1, m_2)
+d_m1, d_m2, d_2 = bevel_gear_C.Substitution_Calculation_2(m=2, phi_R=1 / 3)
 # 4.计算各主要几何尺寸列表备用
+h_a = 1 * m
+h_f = 1.2 * m
+d_a1 = d_1 + 2 * h_a * cos(bevel_gear_C.delta_1)
+d_a2 = d_2 + 2 * h_a * cos(bevel_gear_C.delta_2)
+d_f1 = d_1 - 2 * h_f * cos(bevel_gear_C.delta_1)
+d_f2 = d_2 - 2 * h_f * cos(bevel_gear_C.delta_2)
+theta_f = math.atan(h_f / R) * 180 / pi
 table = PrettyTable(['名称', '代号', '小锥齿轮', '大锥齿轮'])
 table.add_row(['分锥角', 'δ', bevel_gear_C.delta_1, bevel_gear_C.delta_2])
+table.add_row(['齿顶高', 'h_a', h_a, h_a])
+table.add_row(['齿根高', 'h_f', 1.2 * m, 1.2 * m])
+table.add_row(['分度圆直径', 'd', d_1, d_2])
+table.add_row(['平均分度圆直径', 'd_m', d_m1, d_m2])
+table.add_row(['齿顶圆直径', 'd_a', d_a1, d_a2])
+table.add_row(['齿根圆直径', 'd_f', d_f1, d_f2])
+table.add_row(['锥距', 'R', R, R])
+table.add_row(['齿根角', 'θ_f', ['θ_f = h_f / R ', ], ''])
+table.add_row(['顶锥角', 'δ_a', '', ''])
+table.add_row(['根锥角', 'δ_f', '', ''])
+table.add_row(['顶隙', 'c', '', ''])
+table.add_row(['分度圆齿厚', 's', '', ''])
+table.add_row(['当量齿数', 'Z_v', '', ''])
+table.add_row(['齿宽', 'B', '', ''])
 print(table)

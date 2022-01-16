@@ -8,8 +8,9 @@ from math import pi, atan, cos
 import sys
 from prettytable import PrettyTable
 
-reload(sys)
-sys.setdefaultencoding('utf8')
+
+# reload(sys)
+# sys.setdefaultencoding('utf8')
 
 
 # 六、齿轮传动的设计计算
@@ -56,6 +57,7 @@ class BevelGear:
             d_m = d_m1
             phi_d = b / d_m
             print('当量齿轮的齿宽系数：φ_d', phi_d)
+            return R
 
         # 3）计算载荷系数
         def Load_Factor(self):
@@ -72,6 +74,7 @@ class BevelGear:
             print('大端模数：m =', m)
             m = round(d_1 / self.Z_1)
             print('取标准值', m)
+            return m, d_1
 
     # 3、校核齿根弯曲强度
     class CheckToothRootBendingStrength:
@@ -95,11 +98,11 @@ class BevelGear:
             print('弯曲疲劳许用应力：[σ_F]_1 =', self.sigma_F1,
                   '\n弯曲疲劳许用应力：[σ_F]_2 =', self.sigma_F2)
             self.delta_1 = atan(1 / self.mu) * 180 / pi
-            self.delta_2 = 90 - delta_1
-            print('分锥角：δ_1 =', delta_1,
-                  '\n分锥角：δ_2 =', delta_2)
-            Z_v1 = self.Z_1 / cos(delta_1 * pi / 180)
-            Z_v2 = self.Z_2 / cos(delta_2 * pi / 180)
+            self.delta_2 = 90 - self.delta_1
+            print('分锥角：δ_1 =', self.delta_1,
+                  '\n分锥角：δ_2 =', self.delta_2)
+            Z_v1 = self.Z_1 / cos(self.delta_1 * pi / 180)
+            Z_v2 = self.Z_2 / cos(self.delta_2 * pi / 180)
             print('当量齿数：Z_v1 ≈', Z_v1,
                   '\n当量齿数：Z_v2 ≈', Z_v2)
             Y_Fa1 = 2.76
@@ -133,6 +136,7 @@ class BevelGear:
             Z_2 = self.mu * Z_1
             print('小齿轮齿数：Z_1 =', Z_1,
                   '\n小齿轮齿数：Z_2 =', Z_2)
+            return m_min
 
         def Substitution_Calculation_2(self, m, phi_R):
             d_1 = self.Z_1 * m
@@ -145,10 +149,15 @@ class BevelGear:
             B = round(float_B)
             print('B =', float_B)
             print('取整B =', B)
-            B_1 = B * (7 / 6)
+            B_1 = float(B) * (7 / 6)
             B_2 = B
-            d_m1 = d_1(1 - 0.5 * phi_R)
-            d_m2 = d_2(1 - 0.5 * phi_R)
+            print('B_1 =', B_1,
+                  '\nB_2 =', B_2)
+            d_m1 = d_1 * (1 - (0.5 * phi_R))
+            d_m2 = d_2 * (1 - (0.5 * phi_R))
+            print('d_m1 =', d_m1,
+                  '\nd_m2 =', d_m2)
+            return d_m1, d_m2, d_2
 
 
 if __name__ == '__main__':
