@@ -4,7 +4,7 @@
 # @File : gear_drive.py
 # @Software: PyCharm
 import numpy as np
-from math import pi, atan, cos
+from math import pi, atan, cos, tan
 import sys
 from prettytable import PrettyTable
 
@@ -167,7 +167,7 @@ class HelicalSpurGear:
             self.mu = i_2  # 齿数比
             self.Z_2 = self.mu * self.Z_1  # 大齿轮齿数
             self.K_t = 1.6  # 载荷系数
-            self.T_1 = T_2  # 斜齿圆柱齿轮的输入转矩T
+            self.T_2 = T_2  # 斜齿圆柱齿轮的输入转矩T
             self.phi_d = 1.0  # 斜齿圆柱齿轮传动的齿宽系数
             self.epsilon_alpha1 = 0.76  # 端面重合度
             self.epsilon_alpha2 = 0.90  # 端面重合度
@@ -184,11 +184,24 @@ class HelicalSpurGear:
             self.sigma_H1 = (self.K_HN1 * self.sigma_Hlim1) / self.S  # 小锥齿轮的许用接触应力
             self.sigma_H2 = (self.K_HN2 * self.sigma_Hlim2) / self.S  # 大锥齿轮的许用接触应力
             self.sigma_H = max(self.sigma_H1, self.sigma_H2)  # 取两者许用接触应力较大值
-            # 求小锥齿轮分度圆直径
-            self.d_1t_min = 2.93 ** 2 * np.sqrt(
-                (self.Z_E / self.sigma_H) ** 2 * (self.K_t * T_1) / (
-                        self.phi_R * (1 - 0.5 * self.phi_R) ** 2 * self.mu))
+            # 计算小齿轮的分度圆直径d_1t
+            self.d_1t_min = np.cbrt(
+                (2 * self.K_t * self.T_2) / (self.phi_d * self.epsilon_alpha) * (self.mu + 1) / self.mu * (self.Z_H * self.Z_E / self.sigma_H))
             print('小齿轮分度圆直径：d_1t ≥', self.d_1t_min)
+            self.v = (pi * self.d_1t_min * n_2) / 60 / 1000
+            print('圆周速度v =', self.v)
+            self.b = self.phi_d * self.d_1t_min
+            self.beta = 14 * pi / 180
+            self.m_nt = (self.d_1t_min * cos(self.beta)) / self.Z_1
+            self.h = 2.25 * self.m_nt
+            self.b_h = self.b / self.h
+            self.epsilon_beta = 0.318 * self.phi_d * self.Z_1 * tan(self.beta)
+            K_A = 1.00
+            K_v = 1.08
+            K_Halpha = K_Falpha = 1.2
+            K_Hbeta = 1.417
+
+            self.K =
 
 
 if __name__ == '__main__':
