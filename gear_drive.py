@@ -157,7 +157,38 @@ class BevelGear:
             d_m2 = d_2 * (1 - (0.5 * phi_R))
             print('d_m1 =', d_m1,
                   '\nd_m2 =', d_m2)
-            return d_m1, d_m2, d_2
+            return d_m1, d_m2, d_2, B_1, B_2
+
+
+class HelicalSpurGear:
+    class DesignAccordingToToothSurfaceContactStrength:
+        def __init__(self, i_2, T_2, n_2):
+            self.Z_1 = 20  # 小齿轮齿数
+            self.mu = i_2  # 齿数比
+            self.Z_2 = self.mu * self.Z_1  # 大齿轮齿数
+            self.K_t = 1.6  # 载荷系数
+            self.T_1 = T_2  # 斜齿圆柱齿轮的输入转矩T
+            self.phi_d = 1.0  # 斜齿圆柱齿轮传动的齿宽系数
+            self.epsilon_alpha1 = 0.76  # 端面重合度
+            self.epsilon_alpha2 = 0.90  # 端面重合度
+            self.epsilon_alpha = self.epsilon_alpha1 + self.epsilon_alpha2
+            self.Z_E = 189.8  # 弹性影响系数
+            self.Z_H = 2.433  # 区域系数
+            self.sigma_Hlim1 = 580  # 小锥齿轮的接触疲劳强度极限
+            self.sigma_Hlim2 = 540  # 大锥齿轮的接触疲劳强度极限
+            self.N_1 = 60 * n_2 * 16 * 300 * 15  # 小锥齿轮的应力循环次数
+            self.N_2 = self.N_1 / i_2  # 大锥齿轮的应力循环次数
+            self.K_HN1 = 0.97  # 接触疲劳寿命系数
+            self.K_HN2 = 0.98
+            self.S = 1  # 安全系数
+            self.sigma_H1 = (self.K_HN1 * self.sigma_Hlim1) / self.S  # 小锥齿轮的许用接触应力
+            self.sigma_H2 = (self.K_HN2 * self.sigma_Hlim2) / self.S  # 大锥齿轮的许用接触应力
+            self.sigma_H = max(self.sigma_H1, self.sigma_H2)  # 取两者许用接触应力较大值
+            # 求小锥齿轮分度圆直径
+            self.d_1t_min = 2.93 ** 2 * np.sqrt(
+                (self.Z_E / self.sigma_H) ** 2 * (self.K_t * T_1) / (
+                        self.phi_R * (1 - 0.5 * self.phi_R) ** 2 * self.mu))
+            print('小齿轮分度圆直径：d_1t ≥', self.d_1t_min)
 
 
 if __name__ == '__main__':
