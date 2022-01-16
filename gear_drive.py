@@ -14,11 +14,11 @@ class BevelGear:
     class DesignAccordingToToothSurfaceContactStrength:
         # 1）确定公式中各计算数值
         def __init__(self, i_1, T_1, n_1):
-            self.Z_1 = 20
-            self.mu = i_1
-            self.Z_2 = self.mu * self.Z_1
+            self.Z_1 = 20  # 小齿轮齿数
+            self.mu = i_1  # 齿数比
+            self.Z_2 = self.mu * self.Z_1  # 大齿轮齿数
             self.K_t = 2.06  # 载荷系数
-            self.T_1 = T_1
+            self.T_1 = T_1  # 锥齿轮的输入转矩T
             self.phi_R = 1 / 3  # 圆锥齿轮传动的齿宽系数
             self.Z_E = 189.8  # 弹性影响系数
             self.sigma_Hlim1 = 580  # 小锥齿轮的接触疲劳强度极限
@@ -54,7 +54,7 @@ class BevelGear:
         # 3）计算载荷系数
         def Load_Factor(self):
             K_A = 1.00
-            v_m1 = 4.02
+            # v_m1 = 4.02
             K_V = 1.12
             K_Halpha = 1
             K_Hbeta = 1.248
@@ -105,15 +105,15 @@ class BevelGear:
             print('YFa1YSa1_phiF1 =', self.YFa1YSa1_sigmaF1,
                   '\nYFa2YSa2_phiF2 =', self.YFa2YSa2_sigmaF2)
             if self.YFa1YSa1_sigmaF1 > self.YFa2YSa2_sigmaF2:
-                Y_Fa = Y_Fa1
-                Y_Sa = Y_Sa1
-                sigma_F = self.sigma_F1
+                # Y_Fa = Y_Fa1
+                # Y_Sa = Y_Sa1
+                # sigma_F = self.sigma_F1
                 self.YFaYSa_sigmaF = self.YFa1YSa1_sigmaF1
                 print('YFa1YSa1_phiF1 > YFa2YSa2_phiF2小齿轮数值较大')
             else:
-                Y_Fa = Y_Fa2
-                Y_Sa = Y_Sa2
-                sigma_F = self.sigma_F2
+                # Y_Fa = Y_Fa2
+                # Y_Sa = Y_Sa2
+                # sigma_F = self.sigma_F2
                 self.YFaYSa_sigmaF = self.YFa2YSa2_sigmaF2
                 print('YFa1YSa1_phiF1 ≤ YFa2YSa2_phiF2大齿轮数值较大')
 
