@@ -5,6 +5,11 @@
 # @Software: PyCharm
 import numpy as np
 from math import pi, atan, cos
+import sys
+from prettytable import PrettyTable
+
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 
 # 六、齿轮传动的设计计算
@@ -33,7 +38,8 @@ class BevelGear:
             self.sigma_H = max(self.sigma_H1, self.sigma_H2)  # 取两者许用接触应力较大值
             # 求小锥齿轮分度圆直径
             self.d_1t_min = 2.93 ** 2 * np.sqrt(
-                (self.Z_E / self.sigma_H) ** 2 * (self.K_t * T_1) / (self.phi_R * (1 - 0.5 * self.phi_R) ** 2 * self.mu))
+                (self.Z_E / self.sigma_H) ** 2 * (self.K_t * T_1) / (
+                        self.phi_R * (1 - 0.5 * self.phi_R) ** 2 * self.mu))
             print('小齿轮分度圆直径：d_1t ≥', self.d_1t_min)
 
         # 2)调整小齿轮分度圆直径
@@ -88,8 +94,8 @@ class BevelGear:
             self.sigma_F2 = (self.K_FN2 * self.phi_FE2) / self.S
             print('弯曲疲劳许用应力：[σ_F]_1 =', self.sigma_F1,
                   '\n弯曲疲劳许用应力：[σ_F]_2 =', self.sigma_F2)
-            delta_1 = atan(1 / self.mu) * 180 / pi
-            delta_2 = 90 - delta_1
+            self.delta_1 = atan(1 / self.mu) * 180 / pi
+            self.delta_2 = 90 - delta_1
             print('分锥角：δ_1 =', delta_1,
                   '\n分锥角：δ_2 =', delta_2)
             Z_v1 = self.Z_1 / cos(delta_1 * pi / 180)
@@ -120,7 +126,8 @@ class BevelGear:
         # 2）代入数值计算
         def Substitution_Calculation_1(self, T_1, phi_R, d_1, m):
             m_min = np.cbrt(
-                (4 * self.K * T_1) / (phi_R * (1 - 0.5 * phi_R) ** 2 * self.Z_1 ** 2 * (self.mu ** 2 + 1)) * self.YFaYSa_sigmaF)
+                (4 * self.K * T_1) / (
+                        phi_R * (1 - 0.5 * phi_R) ** 2 * self.Z_1 ** 2 * (self.mu ** 2 + 1)) * self.YFaYSa_sigmaF)
             print('m ≥', m_min)
             Z_1 = round(d_1 / m)
             Z_2 = self.mu * Z_1
@@ -138,7 +145,10 @@ class BevelGear:
             B = round(float_B)
             print('B =', float_B)
             print('取整B =', B)
-            # B_1 =
+            B_1 = B * (7 / 6)
+            B_2 = B
+            d_m1 = d_1(1 - 0.5 * phi_R)
+            d_m2 = d_2(1 - 0.5 * phi_R)
 
 
 if __name__ == '__main__':
@@ -146,5 +156,5 @@ if __name__ == '__main__':
     bevel_gear_D.Tooth_Contact_Strength_Design(n_1=1440)
     bevel_gear_D.Load_Factor()
     bevel_gear_C = BevelGear.CheckToothRootBendingStrength(Z_1=16, Z_2=48, mu=2)
-    bevel_gear_C.Substitution_Calculation_1(T_1=30.595749463944532, phi_R=1/3, d_1=32.0042098044378, m=2)
-    bevel_gear_C.Substitution_Calculation_2(m=2, phi_R=1/3)
+    bevel_gear_C.Substitution_Calculation_1(T_1=30.595749463944532, phi_R=1 / 3, d_1=32.0042098044378, m=2)
+    bevel_gear_C.Substitution_Calculation_2(m=2, phi_R=1 / 3)

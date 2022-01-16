@@ -6,6 +6,9 @@
 import math
 import numpy as np
 from math import cos, pi, sqrt
+
+from prettytable import PrettyTable
+
 import motor as mt
 import gear_ratio as gr
 import transmission_parameters as tp
@@ -72,3 +75,7 @@ bevel_gear_C = gd.BevelGear.CheckToothRootBendingStrength(Z_1=16, Z_2=48, mu=2)
 bevel_gear_C.Substitution_Calculation_1(T_1=30.595749463944532, phi_R=1 / 3, d_1=32.0042098044378, m=2)
 # ３）代入数值计算
 bevel_gear_C.Substitution_Calculation_2(m=2, phi_R=1 / 3)
+# 4.计算各主要几何尺寸列表备用
+table = PrettyTable(['名称', '代号', '小锥齿轮', '大锥齿轮'])
+table.add_row(['分锥角', 'δ', bevel_gear_C.delta_1, bevel_gear_C.delta_2])
+print(table)
