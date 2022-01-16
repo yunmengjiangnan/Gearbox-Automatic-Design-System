@@ -63,3 +63,9 @@ class MS:
                 
         if self.name == '':
             return print('请输入正确的编号')
+    
+    def decideHardness(self):
+        '''
+        配对两轮齿面硬度差在30~50HBW或更多
+        '''
+        
