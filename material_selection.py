@@ -22,6 +22,10 @@
 40Cr（调质）                700
 20CrMnTi（渗碳后淬火）      1100
 '''
+from src.toolfunc import resLinerFunc
+from src.parameters_list import *
+
+
 
 class MS:
     '''
@@ -34,7 +38,7 @@ class MS:
     '''
     __material = input(
 '''材料的选择：
-    <编号><材料名称>
+   <编号> <材料名称>
     M0:   45钢（调质）
     M1:   45钢（正火）
     M2:   20Cr（渗碳后淬火）
@@ -60,12 +64,14 @@ class MS:
             if self.__materialBox[i][0] == self.__material:
                 self.name, self.sigma_s = self.__materialBox[i][1], self.__materialBox[i][2]
                 self.hardnessMin,self.hardnessMax = self.__materialBox[i][3], self.__materialBox[i][4]
-                
+
         if self.name == '':
-            return print('请输入正确的编号')
-    
-    def decideHardness(self):
+            return print('请输入正确的编号！')
+
         '''
         配对两轮齿面硬度差在30~50HBW或更多
+        此部分为齿面接触疲劳极限部分
         '''
+        self.hardness = int(input('选择在 {} HBW ~ {} HBW的硬度：'.format(self.hardnessMin,self.hardnessMax)))
         
+

@@ -27,3 +27,7 @@ def resLinerFunc(p1x, p1y, p2x, p2y, plz):
     def resplz(a,b,c,plz):
         return plz*a/b*-1 + c/b*-1
     return resplz(a,b,c,plz)
+
+
+def roundness(num):
+    return round(num/10,0)*10
