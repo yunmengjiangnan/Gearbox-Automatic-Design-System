@@ -22,6 +22,21 @@
 40Cr（调质）                700
 20CrMnTi（渗碳后淬火）      1100
 '''
+'''
+接口使用案例：
+
+from src.parameters_list import *
+from src.toolfunc import resLinerFunc, roundness
+from material_selection import MS
+
+ms1 = MS()
+print(ms1.name)
+print(ms1.sigma_s)
+print(ms1.hardness)
+sigma_Hlim = resLinerFunc(Fzj[0][0],Fzj[0][1],Fzj[0][2],Fzj[0][3],ms1.hardness)
+print(roundness(sigma_Hlim))
+'''
+
 from src.toolfunc import resLinerFunc
 from src.parameters_list import *
 
@@ -74,4 +89,3 @@ class MS:
         '''
         self.hardness = int(input('选择在 {} HBW ~ {} HBW的硬度：'.format(self.hardnessMin,self.hardnessMax)))
         
-
