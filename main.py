@@ -17,9 +17,9 @@ import transmission_parameters as tp
 import gear_drive as gd
 
 # 已知条件
-F = 5
-v = 0.8
-d = 390
+F = 8
+v = 0.37
+d = 351
 # 实例化一个输出控制端
 console = Console()
 console.print("一、设计任务：", style="red")
@@ -29,13 +29,13 @@ table_1.add_column('组数')
 table_1.add_column('输送链的牵引力F（KG）')
 table_1.add_column('输送链的速度v(m/s)')
 table_1.add_column('输送链链轮节圆直径d(mm)')
-table_1.add_row('第六组', '5', '0.8', '390')
+table_1.add_row('第六组', '8', '0.37', '351')
 print(table_1)
 # 计算工作寿命
 print('注：1.链板式输送机工作时，运转方向不变，工作载荷稳定。'
-      '\n    2.工作寿命10年，每年300个工作日，每日工作12小时。')
-t = 10 * 300 * 12
-print('工作寿命：t=10×300×12h=3.6×10^4 h')
+      '\n    2.工作寿命15年，每年300个工作日，每日工作16小时。')
+t = 15 * 300 * 16
+print('工作寿命：t=15×300×16h=7.2×10^4 h')
 console.print("二、传动方案的拟定及说明", style="red")
 print('如上图课程设计任务书上布置简图所示，传动方案采用圆锥圆柱齿轮减速箱：'
       '\n圆锥齿轮置于高速极，以免使圆锥齿轮尺寸过大加工困难；'
@@ -49,20 +49,24 @@ P_W = mt.Output_Power(F, v)
 n = mt.Sprocket_Speed(d, v)
 # 3、传动效率η
 eta = mt.Transmission_Efficiency()
+eta = 0.83
 # 4、电动机输入功率P_d
 P_d = mt.Input_Power(P_W, eta)
 # 5、电动机的选择
-print('选YX3系列132S-4型号电动机，主要技术数据如下：'
-      '\n额定功率：5.5 kw'
-      '\n满载转速：1440r/min')
+# print('选YX3系列132S-4型号电动机，主要技术数据如下：'
+#       '\n额定功率：5.5 kw'
+#       '\n满载转速：1440r/min')
+print('选Y112M-4型号电动机，主要技术数据如下：'
+      '\n额定功率：4 kw'
+      '\n满载转速：1440 r/min')
 
 # 四、传动装置的总传动比及其分配
 console.print("四、传动装置的总传动比及其分配", style="red")
 # 1、系统总传动比i
 i = gr.Total_Gear_Ratio(n)
 # 2、分配传动比(圆锥齿轮传动i_1/圆柱齿轮传动i_2/链传动i_3)
-i_1 = 2
-i_2 = 6
+i_1 = 3
+i_2 = 5
 i_3 = gr.Transmission_Ratio_Assignment(i, i_1, i_2)
 
 # 五、计算传动装置的运动和动力参数
@@ -80,6 +84,10 @@ T_1, T_2, T_3 = tp.Input_Torque(P_1, P_2, P_3, n_1, n_2, n_3)
 console.print("六、齿轮传动的设计计算", style="red")
 console.print("(一)高速级锥齿轮传动：", style='#FF6100')
 console.print("1、选定齿轮类型、精度等级、材料及齿数（略）", style="yellow")
+print('（1）选用标准直齿锥齿轮传动，压力角取20°，轴交角 。',
+      '\n（2）齿轮精度由上面三电机选择时确定为8级。',
+      '\n（3）材料选择：选择小锥齿轮材料为45钢（调质），硬度为250HBS；大齿轮材料也为45钢（调质），硬度为220HBS，二者硬度差为30HBS。',
+      '\n（4）初选小齿轮齿数Z1=20，大齿轮齿数Z2=uZ1=3x20=60。')
 console.print("2、按齿面接触强度设计", style="yellow")
 console.print("1)确定公式的各计算数值", style="green")
 bevel_gear_D = gd.BevelGear.DesignAccordingToToothSurfaceContactStrength(i_1=2, T_1=30.595749463944532, n_1=1440)
@@ -193,4 +201,4 @@ table_2.add_row('齿宽', 'B', str(B_1), str(B_2))
 print(table_2)
 
 console.print("七、链传动设计", style="red")
-P_4 = (F * V) / (1000 * eta_3)
+# P_4 = (F * v) / (1000 * eta_3)

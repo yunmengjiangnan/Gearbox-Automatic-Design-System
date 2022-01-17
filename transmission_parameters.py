@@ -5,6 +5,8 @@
 # @Software: PyCharm
 import motor as mt
 from rich import print
+
+
 # from rich.console import Console
 
 
@@ -21,10 +23,10 @@ def Shaft_Speed(I_1, I_2):
 
 # 2、各轴输入功率P（kW）
 def Input_Power(P_D):
-    eta_1 = 0.96
-    eta_2 = 0.98
-    eta_4 = 0.99
-    eta_5 = 0.98
+    eta_1 = 0.96  # ⑴锥齿轮传动：8级精度的一般齿轮传动(稀油润滑)
+    eta_2 = 0.98  # ⑵斜齿轮传动：7级精度的一般齿轮传动(稀油润滑)
+    eta_4 = 0.99  # ⑷联轴器：初选弹性联轴器
+    eta_5 = 0.98  # ⑸滚动轴承：滚子轴承（稀油润滑）
     P_1 = P_D * eta_4 * eta_5
     P_2 = P_1 * eta_1 * eta_5
     P_3 = P_2 * eta_2 * eta_5
