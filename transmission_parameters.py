@@ -4,6 +4,8 @@
 # @File : transmission_parameters.py
 # @Software: PyCharm
 import motor as mt
+from rich import print
+# from rich.console import Console
 
 
 # 1、各轴转速n（r/min）

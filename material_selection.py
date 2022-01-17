@@ -39,6 +39,8 @@ print(roundness(sigma_Hlim))
 
 from src.toolfunc import resLinerFunc
 from src.parameters_list import *
+from rich import print
+from rich.console import Console
 
 
 class MS:

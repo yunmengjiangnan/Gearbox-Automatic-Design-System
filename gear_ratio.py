@@ -3,6 +3,9 @@
 # @Author : xzh
 # @File : gear_ratio.py
 # @Software: PyCharm
+from rich import print
+# from rich.console import Console
+
 
 # 1、系统总传动比i
 def Total_Gear_Ratio(N):
