@@ -7,9 +7,6 @@ import numpy as np
 from math import pi, atan, cos, tan
 from rich import print
 from rich.console import Console
-import sys
-from prettytable import PrettyTable
-
 
 # 实例化一个输出控制端
 console = Console()
@@ -166,7 +163,6 @@ class HelicalSpurGear:
     class DesignAccordingToToothSurfaceContactStrength:
         def __init__(self, i_2, T_2, n_2):
             self.Z_1 = 20  # 小齿轮齿数
-
             print('选小齿轮的齿数为z_1 =', self.Z_1)
             self.mu = i_2  # 齿数比
             self.Z_2 = self.mu * self.Z_1  # 大齿轮齿数
@@ -202,29 +198,10 @@ class HelicalSpurGear:
             self.K_HN2 = 0.98
             print('（10）接触疲劳寿命系数K_HN1 =', self.K_HN1,
                   '\n      接触疲劳寿命系数K_HN2 =', self.K_HN2)
-
-            self.mu = i_2  # 齿数比
-            self.Z_2 = self.mu * self.Z_1  # 大齿轮齿数
-            self.K_t = 1.6  # 载荷系数
-            self.T_2 = T_2  # 斜齿圆柱齿轮的输入转矩T
-            self.phi_d = 1.0  # 斜齿圆柱齿轮传动的齿宽系数
-            self.epsilon_alpha1 = 0.76  # 端面重合度
-            self.epsilon_alpha2 = 0.90  # 端面重合度
-            self.epsilon_alpha = self.epsilon_alpha1 + self.epsilon_alpha2
-            self.Z_E = 189.8  # 弹性影响系数
-            self.Z_H = 2.433  # 区域系数
-            self.sigma_Hlim1 = 580  # 小锥齿轮的接触疲劳强度极限
-            self.sigma_Hlim2 = 540  # 大锥齿轮的接触疲劳强度极限
-            self.N_1 = 60 * n_2 * 16 * 300 * 15  # 小锥齿轮的应力循环次数
-            self.N_2 = self.N_1 / i_2  # 大锥齿轮的应力循环次数
-            self.K_HN1 = 0.97  # 接触疲劳寿命系数
-            self.K_HN2 = 0.98
-
             self.S = 1  # 安全系数
             self.sigma_H1 = (self.K_HN1 * self.sigma_Hlim1) / self.S  # 小锥齿轮的许用接触应力
             self.sigma_H2 = (self.K_HN2 * self.sigma_Hlim2) / self.S  # 大锥齿轮的许用接触应力
             self.sigma_H = max(self.sigma_H1, self.sigma_H2)  # 取两者许用接触应力较大值
-
             print('（11）[σ_H]_1 =', self.sigma_H1,
                   '\n       [σ_H]_2 =', self.sigma_H2,
                   '\n       [σ_H] =', self.sigma_H)
@@ -236,20 +213,11 @@ class HelicalSpurGear:
             print('（1）小齿轮分度圆直径：d_1t ≥', self.d_1t_min)
             self.v = (pi * self.d_1t_min * n_2) / 60 / 1000
             print('（2）圆周速度v =', self.v)
-
-            # 计算小齿轮的分度圆直径d_1t
-            self.d_1t_min = np.cbrt(
-                (2 * self.K_t * self.T_2) / (self.phi_d * self.epsilon_alpha) * (self.mu + 1) / self.mu * (self.Z_H * self.Z_E / self.sigma_H))
-            print('小齿轮分度圆直径：d_1t ≥', self.d_1t_min)
-            self.v = (pi * self.d_1t_min * n_2) / 60 / 1000
-            print('圆周速度v =', self.v)
-
             self.b = self.phi_d * self.d_1t_min
             self.beta = 14 * pi / 180
             self.m_nt = (self.d_1t_min * cos(self.beta)) / self.Z_1
             self.h = 2.25 * self.m_nt
             self.b_h = self.b / self.h
-
             print('（3）计算齿宽b及模数m',
                   '\n     b = φ_d ⋅ d_1t =', self.b,
                   '\n     m_nt =', self.m_nt,
@@ -332,13 +300,6 @@ class HelicalSpurGear:
             print('为同时满足接触疲劳强度，需按接触疲劳强度算得的分度圆直径d_1 =', d_1,
                   '\n于是有：Z_1 =', self.Z_1,
                   '\n则Z_2 =', self.Z_2)
-            self.epsilon_beta = 0.318 * self.phi_d * self.Z_1 * tan(self.beta)
-            K_A = 1.00
-            K_v = 1.08
-            K_Halpha = K_Falpha = 1.2
-            K_Hbeta = 1.417
-
-            self.K =
 
 
 if __name__ == '__main__':
