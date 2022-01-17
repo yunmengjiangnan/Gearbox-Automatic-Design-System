@@ -77,6 +77,7 @@ m = max(m_1, m_2)
 d_m1, d_m2, d_2, B_1, B_2 = bevel_gear_C.Substitution_Calculation_2(m=2, phi_R=1 / 3)
 console.print("4.计算各主要几何尺寸列表备用", style='yellow')
 
+# 4.计算各主要几何尺寸列表备用
 h_a = 1 * m
 h_f = 1.2 * m
 d_a1 = d_1 + 2 * h_a * cos(bevel_gear_C.delta_1)
@@ -126,3 +127,22 @@ a = round(a_float)
 print('a =', a_float, 'mm'
       '将中心距圆整为', a, 'mm')
 console.print("2）按圆整后的中心距修正螺旋角β", style="green")
+table = PrettyTable(['名称', '代号', '小锥齿轮', '大锥齿轮'])
+table.add_row(['分锥角', 'δ', bevel_gear_C.delta_1, bevel_gear_C.delta_2])
+table.add_row(['齿顶高', 'h_a', h_a, h_a])
+table.add_row(['齿根高', 'h_f', 1.2 * m, 1.2 * m])
+table.add_row(['分度圆直径', 'd', d_1, d_2])
+table.add_row(['平均分度圆直径', 'd_m', d_m1, d_m2])
+table.add_row(['齿顶圆直径', 'd_a', d_a1, d_a2])
+table.add_row(['齿根圆直径', 'd_f', d_f1, d_f2])
+table.add_row(['锥距', 'R', R, R])
+table.add_row(['齿根角', 'θ_f', theta_f, theta_f])
+table.add_row(['顶锥角', 'δ_a', delta_a1, delta_a2])
+table.add_row(['根锥角', 'δ_f', delta_f1, delta_f2])
+table.add_row(['顶隙', 'c', c, c])
+table.add_row(['分度圆齿厚', 's', s, s])
+table.add_row(['当量齿数', 'Z_v', Z_v1, Z_v2])
+table.add_row(['齿宽', 'B', B_1, B_2])
+print(table)
+# 二、低速级斜齿圆柱齿轮传动
+# 1、选定齿轮类型、旋向、精度等级、材料及齿数
