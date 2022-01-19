@@ -49,7 +49,6 @@ P_W = mt.Output_Power(F, v)
 n = mt.Sprocket_Speed(d, v)
 # 3、传动效率η
 eta = mt.Transmission_Efficiency()
-eta = 0.83
 # 4、电动机输入功率P_d
 P_d = mt.Input_Power(P_W, eta)
 # 5、电动机的选择
@@ -84,28 +83,28 @@ T_1, T_2, T_3 = tp.Input_Torque(P_1, P_2, P_3, n_1, n_2, n_3)
 console.print("六、齿轮传动的设计计算", style="red")
 console.print("(一)高速级锥齿轮传动：", style='#FF6100')
 console.print("1、选定齿轮类型、精度等级、材料及齿数（略）", style="yellow")
-print('（1）选用标准直齿锥齿轮传动，压力角取20°，轴交角 。',
+print('（1）选用标准直齿锥齿轮传动，压力角取20°，轴交角∑=90°。',
       '\n（2）齿轮精度由上面三电机选择时确定为8级。',
       '\n（3）材料选择：选择小锥齿轮材料为45钢（调质），硬度为250HBS；大齿轮材料也为45钢（调质），硬度为220HBS，二者硬度差为30HBS。',
       '\n（4）初选小齿轮齿数Z1=20，大齿轮齿数Z2=uZ1=3x20=60。')
 console.print("2、按齿面接触强度设计", style="yellow")
 console.print("1)确定公式的各计算数值", style="green")
-bevel_gear_D = gd.BevelGear.DesignAccordingToToothSurfaceContactStrength(i_1=2, T_1=30.595749463944532, n_1=1440)
+bevel_gear_D = gd.BevelGear.DesignAccordingToToothSurfaceContactStrength(i_1=i_1, T_1=T_1, n_1=n_1)
 console.print("2)调整小齿轮分度圆直径", style="green")
-R = bevel_gear_D.Tooth_Contact_Strength_Design(n_1=1440)
+R = bevel_gear_D.Tooth_Contact_Strength_Design(n_1=n_1)
 console.print("3）计算载荷系数", style="green")
 m_1, d_1 = bevel_gear_D.Load_Factor()
 
 console.print("3、校核齿根弯曲强度", style='yellow')
 console.print("1）确定公式的各计算数值", style="green")
-bevel_gear_C = gd.BevelGear.CheckToothRootBendingStrength(Z_1=16, Z_2=48, mu=2)
+bevel_gear_C = gd.BevelGear.CheckToothRootBendingStrength(Z_1=bevel_gear_D.Z_1, Z_2=bevel_gear_D.Z_2, mu=bevel_gear_D.mu)
 console.print("2）代入数值计算", style="green")
-m_2 = bevel_gear_C.Substitution_Calculation_1(T_1=30.595749463944532, phi_R=1 / 3, d_1=32.0042098044378, m=2)
+m_2 = bevel_gear_C.Substitution_Calculation_1(T_1=T_1, phi_R=1 / 3, d_1=d_1, m=m_1)
 console.print("3）代入数值计算", style="green")
 m = max(m_1, m_2)
-d_m1, d_m2, d_2, B_1, B_2 = bevel_gear_C.Substitution_Calculation_2(m=2, phi_R=1 / 3)
-console.print("4.计算各主要几何尺寸列表备用", style='yellow')
+d_m1, d_m2, d_1, d_2, B_1, B_2 = bevel_gear_C.Substitution_Calculation_2(m=m, phi_R=1 / 3)
 
+console.print("4.计算各主要几何尺寸列表备用", style='yellow')
 h_a = 1 * m
 h_f = 1.2 * m
 d_a1 = d_1 + 2 * h_a * cos(bevel_gear_C.delta_1)
@@ -126,7 +125,7 @@ table.add_column('名称')
 table.add_column('代号')
 table.add_column('小锥齿轮')
 table.add_column('大锥齿轮')
-table.add_row('分锥角', 'δ', str(bevel_gear_C.delta_2), str(bevel_gear_C.delta_2))
+table.add_row('分锥角', 'δ', str(bevel_gear_C.delta_1), str(bevel_gear_C.delta_2))
 table.add_row('齿顶高', 'h_a', str(h_a), str(h_a))
 table.add_row('齿根高', 'h_f', str(1.2 * m), str(1.2 * m))
 table.add_row('分度圆直径', 'd', str(d_1), str(d_2))
@@ -146,41 +145,52 @@ print(table)
 console.print("（二）低速级圆柱斜齿轮传动", style='#FF6100')
 console.print("1、选定齿轮类型、旋向、精度等级、材料及齿数（略）", style="yellow")
 console.print("2、按齿面接触强度设计", style="yellow")
-helical_spur_gear_D = gd.HelicalSpurGear.DesignAccordingToToothSurfaceContactStrength(i_2=6, T_2=57.56896219135802,
-                                                                                      n_2=720)
+helical_spur_gear_D = gd.HelicalSpurGear.DesignAccordingToToothSurfaceContactStrength(i_2=i_2, T_2=T_2,
+                                                                                      n_2=n_2)
 console.print("3、按齿根弯曲强度设计", style="yellow")
-helical_spur_gear_C = gd.HelicalSpurGear.CheckToothRootBendingStrength(i_2=6, T_2=57569, d_1=32.0042098044378)
+helical_spur_gear_C = gd.HelicalSpurGear.CheckToothRootBendingStrength(i_2=i_2, T_2=T_2, d_1=helical_spur_gear_D.d_1)
+m_n = None
+if helical_spur_gear_D.m_n > helical_spur_gear_C.m_n_min:
+    m_n = round(helical_spur_gear_D.m_n)
+    print('对比计算结果，由齿面接触疲劳强度计算的法面模数m_n大于由齿根弯曲疲劳强度计算的法面模数，取m_n =', m_n,
+          '已可满足弯曲强度。')
+helical_spur_gear_D.Z_1 = helical_spur_gear_D.d_1 * cos(helical_spur_gear_D.beta) / m_n
+helical_spur_gear_D.Z_1 = round(helical_spur_gear_D.Z_1)
+helical_spur_gear_D.Z_2 = i_2 * helical_spur_gear_D.Z_1
+print('但为同时满足接触疲劳强度，需按接触疲劳强度算得的分度圆直径d_1 =', helical_spur_gear_D.d_1,
+      '\n于是有：Z_1 =', helical_spur_gear_D.Z_1,
+      '\n则Z_2 =', helical_spur_gear_D.Z_2)
 console.print("4、计算几何尺寸", style="yellow")
 console.print("1）计算中心距", style="green")
-a_float = ((helical_spur_gear_C.Z_1 + helical_spur_gear_C.Z_2) * helical_spur_gear_C.m_n) / (
+a_float = ((helical_spur_gear_C.Z_1 + helical_spur_gear_C.Z_2) * m_n) / (
         2 * cos(helical_spur_gear_C.beta))
 a = round(a_float)
 print('a =', a_float, 'mm'
                       '将中心距圆整为', a, 'mm')
 console.print("2）按圆整后的中心距修正螺旋角β", style="green")
-beta = math.acos(((helical_spur_gear_C.Z_1 + helical_spur_gear_C.Z_2) * helical_spur_gear_C.m_n) / (2 * a))
+beta = math.acos(((helical_spur_gear_C.Z_1 + helical_spur_gear_C.Z_2) * m_n) / (2 * a))
 rate = (beta - helical_spur_gear_C.beta) / helical_spur_gear_C.beta
 if rate < 0.05:
     print('β =', beta,
           '且β与原定义β差距在5%以内，螺旋角值β改变不多，故参数ε_α、K_β、Z_H等不必修正')
 console.print("3）计算大、小齿轮分度圆直径", style="green")
-d_1 = (helical_spur_gear_C.m_n * helical_spur_gear_C.Z_1) / cos(beta)
-d_2 = (helical_spur_gear_C.m_n * helical_spur_gear_C.Z_2) / cos(beta)
+d_1 = (m_n * helical_spur_gear_C.Z_1) / cos(beta)
+d_2 = (m_n * helical_spur_gear_C.Z_2) / cos(beta)
 console.print("4）计算齿轮宽度", style="green")
-float_b = helical_spur_gear_D.phi_d * d_1
+float_b = helical_spur_gear_D.phi_d * helical_spur_gear_D.d_1
 b = round(float_b)
 print('b=φ_d * d_1 =', float_b,
       '\n圆整后，取B_2 =', b, '，B_1 =', round(b * 1.1))
 console.print("5、计算所得结果汇总如下表备用。", style="yellow")
-m_n = helical_spur_gear_C.m_n
-m_t = helical_spur_gear_C.m_n / cos(beta)
+m_n = m_n
+m_t = m_n / cos(beta)
 a_n = 20
 h_a = 1 * m_n
 h_f = 1.25 * m_n
-d_a1 = d_1 + 2 * h_a * cos(helical_spur_gear_C.beta)
-d_a2 = d_2 + 2 * h_a * cos(helical_spur_gear_C.beta)
-d_f1 = d_1 - 2 * h_f * cos(helical_spur_gear_C.beta)
-d_f2 = d_2 - 2 * h_f * cos(helical_spur_gear_C.beta)
+d_a1 = helical_spur_gear_D.d_1 + 2 * h_a * cos(helical_spur_gear_C.beta)
+d_a2 = helical_spur_gear_D.d_2 + 2 * h_a * cos(helical_spur_gear_C.beta)
+d_f1 = helical_spur_gear_D.d_1 - 2 * h_f * cos(helical_spur_gear_C.beta)
+d_f2 = helical_spur_gear_D.d_2 - 2 * h_f * cos(helical_spur_gear_C.beta)
 B_2 = b
 B_1 = round(b * 1.1)
 table_2 = Table(show_header=True, header_style='bold magenta')
@@ -188,11 +198,11 @@ table_2.add_column('名称')
 table_2.add_column('符号')
 table_2.add_column('小齿轮')
 table_2.add_column('大齿轮')
-table_2.add_row('螺旋角', 'β', str(beta), str(beta))
+table_2.add_row('螺旋角', 'β', str(beta / pi * 180), str(beta / pi * 180))
 table_2.add_row('法面模数', 'm_n', str(m_n), str(m_n))
 table_2.add_row('端面模数', 'm_t', str(m_t), str(m_t))
 table_2.add_row('法面压力角', 'α_n', str(a_n), str(a_n))
-table_2.add_row('分度圆直径', 'd', str(d_1), str(d_2))
+table_2.add_row('分度圆直径', 'd', str(helical_spur_gear_D.d_1), str(helical_spur_gear_D.d_2))
 table_2.add_row('齿顶高', 'h_a', str(h_a), str(h_a))
 table_2.add_row('齿根高', 'h_f', str(h_f), str(h_f))
 table_2.add_row('齿顶圆直径', 'd_a', str(d_a1), str(d_a2))
@@ -201,4 +211,10 @@ table_2.add_row('齿宽', 'B', str(B_1), str(B_2))
 print(table_2)
 
 console.print("七、链传动设计", style="red")
-# P_4 = (F * v) / (1000 * eta_3)
+eta_3 = 0.96
+P_4 = (F * v) / (1000 * eta_3)
+print('链传动传递功率：P_4 =', P_4, 'KW',
+      '\n传动比i_3 =', i_3)
+Z_1 = 17
+Z_2 = 4.77 * 17
+print('（1）选择链传动齿数，取Z_1=17根据传动比Z_2=4.77×17≈81')
