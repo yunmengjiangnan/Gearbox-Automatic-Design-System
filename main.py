@@ -19,6 +19,8 @@ import transmission_parameters as tp
 import gear_drive as gd
 
 # 已知条件
+from rolling_bearing import RollingBearing
+
 F = 8
 v = 0.37
 d = 351
@@ -255,78 +257,17 @@ print('（4）计算链节数和中心距'
 
 v = (n_3 * Z_1 * P) / 60 / 1000
 print('(5)计算链速，确定润滑方式，v=(n_3 z_1 p)/(60×1000)=', v, 'm/s'
-      '\n       由v=', v, 'm/s和链号20A—1 查参考文献[2]图9-4 采用滴油润滑')
+                                                    '\n       由v=', v, 'm/s和链号20A—1 查参考文献[2]图9-4 采用滴油润滑')
 F_e = 1000 * P_4 * 1000 / v
 K_FP = 1.15
 F_P = K_FP * F_e
 print('(6)计算轴向力，有效圆周力为：F_e = 1000 * P_4 / v =', F_e, 'N'
-      '\n        链轮水平布置时轴力系数K_FP =', K_FP, '则周向力为F_p ≈', F_P, 'N')
+                                                     '\n        链轮水平布置时轴力系数K_FP =', K_FP, '则周向力为F_p ≈', F_P, 'N')
 
 console.print("八、轴的设计计算", style="red")
-sigma_B = 640
-sigma_S = 355
-sigma__1 = 275
-sigma__1_agree = 60
-print('(在本次设计中为减轻设计负担，只进行低速轴的强度校核)',
-      '\n查表15-1选取轴的材料为45钢调质处理，硬度217~255HBs，'
-      '抗拉强度极限σ_B =', sigma_B,
-      '，屈服极限σ_S =', sigma_S,
-      '，弯曲疲劳极限σ_-1 =', sigma__1,
-      '，许用弯曲应力[σ_-1] =', sigma__1_agree, 'MPa')
-console.print("（一）高速轴的设计计算", style='#FF6100')
-console.print("1、求输入轴上的功率P1、转速n1和转矩T1", style="yellow")
-print('P_1 =', P_1,
-      '，n_1 =', n_1,
-      '，T_1 =', T_1)
-console.print("2、求作用在齿轮上的力", style="yellow")
-d_m1 = bevel_gear_C.d_1 * (1 - 0.5 * bevel_gear_D.phi_R)
-F_t1 = (2 * T_1) / d_m1 * 1000
-F_r1 = F_t1 * tan(bevel_gear_D.alpha * pi / 180) * cos(bevel_gear_C.delta_1 * pi / 180)
-F_a1 = F_t1 * tan(bevel_gear_D.alpha * pi / 180) * sin(bevel_gear_C.delta_1 * pi / 180)
-print('因已知高速级小锥齿轮齿宽中点处的分度圆直径为d_m1=d_1*(1-0.5*φ_R)=', d_m1, 'mm ',
-      '\n则F_t1 = (2*T_1)/d_m1 =', F_t1, 'N',
-      '\nF_r1 = F_t1*tan(α)*cos(δ_1) =', F_r1, 'N',
-      '\nF_a1 =F_t1*tan(α)*sin(δ_1) =', F_a1, 'N')
-console.print("3、初步确定轴的最小直径", style="yellow")
-A_0 = 115
-d = A_0 * np.cbrt(P_1 / n_1)
-d_min = round(d / 10) * 10
-K_A = 1.5
-T_ca = K_A * T_1
-print('根据参考文献[2]表15-3，由于最小直径处只受扭矩作用,取A_0 =', A_0, '，根据P：370公式（15-2）于是得',
-      '\nd ≥ ', d, 'mm',
-      '考虑到这个轴上有两个键槽，设计值要加大15%；由图可知，轴最小直径处与联轴器相连，考虑到联轴器是标准件，故取',
-      'd_min =', d_min, 'mm',
-      '为了使联轴器的孔径与所选的轴直径d_(Ⅰ-Ⅱ)相适应，故需同时选取联轴器型号：'
-      '\n联轴器的计算转矩T_ca=K_A*T_1，查参考文献[2]表１４－１，考虑到转矩变化很小，故取K_A =', K_A, '，则：T_ca=K_A*T_1=', T_ca, 'N⋅mm',
-      '\n按照计算转矩T_ca应小于联轴器公称转矩的条件，并满足电动机要求，因处于高速级，小功率，选取弹性柱销联轴器，查参考文献[1]表8—5，'
-      '选取LX2型弹性柱销联轴器，型号：LX2联轴器，其公称扭矩为T_n=560N⋅m。'
-      '半联轴器的孔径 ，故取d_(Ⅰ-Ⅱ)=', d_min, 'mm，半联轴器长度L=38mm，半联轴器与轴配合的毂孔长度L_1=52mm（其余尺寸按表中取值）。')
 
-console.print("4、轴的结构设计", style="yellow")
-
-console.print("（1）拟订轴上零件的装配方案", style="yellow")
-console.print("（２）根据轴向定位要求确定轴的各段直径和长度", style="yellow")
-print('选取原则：定位轴肩的高度h=(0.07~0.1)d ,非定位轴肩高度一般取1~2mm为了满足半联轴器的轴向定位要求，Ⅰ－Ⅱ轴段右端需制出一轴肩所以')
-console.print("5、轴上零件的周向固定", style="yellow")
-console.print("6、轴上倒角与圆角", style="yellow")
-
-console.print("（二）中速轴的设计计算", style='#FF6100')
-console.print("1、求输入轴上的功率P2、转速n2和转矩T2", style="yellow")
-console.print("2、求作用在齿轮上的力", style="yellow")
-console.print("3、初步确定轴的最小直径", style="yellow")
-console.print("4、轴的结构设计", style="yellow")
-console.print("5、轴上零件的周向固定", style="yellow")
-console.print("6、轴上倒角与圆角", style="yellow")
-
-console.print("（三）低速轴的设计计算", style='#FF6100')
-console.print("1、求输入轴上的功率P3、转速n2和转矩T2", style="yellow")
-console.print("2、求作用在齿轮上的力", style="yellow")
-console.print("3、初步确定轴的最小直径", style="yellow")
-console.print("4、轴的结构设计", style="yellow")
-console.print("5、求轴上的载荷", style="yellow")
-console.print("6、按弯扭合成应力校核轴的强度", style="yellow")
-console.print("7、轴上零件的周向固定", style="yellow")
-console.print("8、轴上倒角与圆角", style="yellow")
 
 console.print("九、滚动轴承的校核", style="red")
+console.print("（一）高速轴上的轴承", style='#FF6100')
+rolling_bearing_1 = RollingBearing()
+
