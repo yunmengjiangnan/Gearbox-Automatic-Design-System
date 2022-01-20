@@ -19,6 +19,7 @@ class BevelGear:
     class DesignAccordingToToothSurfaceContactStrength:
         # 1）确定公式中各计算数值
         def __init__(self, i_1, T_1, n_1):
+            self.alpha = 20  # 压力角
             self.Z_1 = 20  # 小齿轮齿数
             self.mu = i_1  # 齿数比
             self.Z_2 = self.mu * self.Z_1  # 大齿轮齿数
