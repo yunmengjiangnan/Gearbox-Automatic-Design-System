@@ -25,16 +25,10 @@ class Axis:
         self.sigma__1 = 275
         self.sigma__1_agree = 60
 
-        print('(在本次设计中为减轻设计负担，只进行低速轴的强度校核)',
-              '\n查表15-1选取轴的材料为45钢调质处理，硬度217~255HBs，'
-              '抗拉强度极限σ_B =', self.sigma_B,
-              '，屈服极限σ_S =', self.sigma_S,
-              '，弯曲疲劳极限σ_-1 =', self.sigma__1,
-              '，许用弯曲应力[σ_-1] =', self.sigma__1_agree, 'MPa')
-        console.print("1、求输入轴上的功率P1、转速n1和转矩T1", style="yellow")
-        print('P_1 =', self.P,
-              '，n_1 =', self.n,
-              '，T_1 =', self.T)
+        # console.print("1、求输入轴上的功率P1、转速n1和转矩T1", style="yellow")
+        print('P_', num, '=', self.P,
+              '，n_', num, '=', self.n,
+              '，T_', num, '=', self.T)
         console.print("2、求作用在齿轮上的力", style="yellow")
         d_m1 = d * (1 - 0.5 * phi_r)
         self.F_t1 = (2 * self.T) / d_m1 * 1000
@@ -47,9 +41,9 @@ class Axis:
         console.print("3、初步确定轴的最小直径", style="yellow")
         self.A_0 = 115
         self.d = self.A_0 * np.cbrt(self.P / self.n)
-        self.d_min = round(d / 10) * 10
+        self.d_min = round(self.d * 1.15 / 5) * 5
         self.K_A = 1.5
-        self.T_ca = self.K_A * self.T
+        self.T_ca = self.K_A * self.T * 1000
         print('根据参考文献[2]表15-3，由于最小直径处只受扭矩作用,取A_0 =', self.A_0, '，根据P：370公式（15-2）于是得',
               '\nd ≥ ', self.d, 'mm',
               '考虑到这个轴上有两个键槽，设计值要加大15%；由图可知，轴最小直径处与联轴器相连，考虑到联轴器是标准件，故取',
@@ -64,13 +58,18 @@ class Axis:
 
         console.print("（1）拟订轴上零件的装配方案", style="yellow")
         console.print("（２）根据轴向定位要求确定轴的各段直径和长度", style="yellow")
-        print('选取原则：定位轴肩的高度h=(0.07~0.1)d ,非定位轴肩高度一般取1~2mm为了满足半联轴器的轴向定位要求，Ⅰ－Ⅱ轴段右端需制出一轴肩所以')
+        self.d_i_ii = self.d_min
+        self.l_i_ii = 36
+        self.l_ii_iii = 32
+        print('选取原则：定位轴肩的高度h=(0.07~0.1)d ,非定位轴肩高度一般取1~2mm为了满足半联轴器的轴向定位要求，Ⅰ－Ⅱ轴段右端需制出一轴肩所以',
+              '\n        d_I_II =', self.d_i_ii, 'L_I_II =', self.l_i_ii,
+              '\n        d_II_III =', self.d_i_ii + 2, 'L_II_III =', self.l_ii_iii)
         console.print("5、轴上零件的周向固定", style="yellow")
         console.print("6、轴上倒角与圆角", style="yellow")
 
 
 class AxisAndStrengthCheck:
-    def __init__(self,  num, alpha, delta_1, d, phi_r, p, n, t):
+    def __init__(self, num, alpha, delta_1, d, phi_r, p, n, t):
         console.print('1、求输入轴上的功率P', num, '、转速n', num, '和转矩T', num, style="yellow")
         self.P = p
         self.n = n
@@ -101,7 +100,7 @@ class AxisAndStrengthCheck:
               '\nF_r1 = F_t1*tan(α)*cos(δ_1) =', self.F_r1, 'N',
               '\nF_a1 =F_t1*tan(α)*sin(δ_1) =', self.F_a1, 'N')
         console.print("3、初步确定轴的最小直径", style="yellow")
-        self.A_0 = 115
+        self.A_0 = 100
         self.d = self.A_0 * np.cbrt(self.P / self.n)
         self.d_min = round(d / 10) * 10
         self.K_A = 1.5
@@ -121,8 +120,11 @@ class AxisAndStrengthCheck:
         print('小圆锥齿轮采用悬臂结构，轴装于套杯内，一对圆锥滚子轴承支撑（正装）。')
         console.print("（２）根据轴向定位要求确定轴的各段直径和长度", style="yellow")
         self.d_i_ii = self.d_min
+        self.l_i_ii = 36
+        self.l_ii_iii = 32
         print('选取原则：定位轴肩的高度h=(0.07~0.1)d ,非定位轴肩高度一般取1~2mm为了满足半联轴器的轴向定位要求，Ⅰ－Ⅱ轴段右端需制出一轴肩所以',
-              '\n        d_I_II =', self.d_i_ii, 'L_I_II =', )
+              '\n        d_I_II =', self.d_i_ii, 'L_I_II =', self.l_i_ii,
+              '\n        d_II_III =', self.d_i_ii + 2, 'L_II_III =', self.l_ii_iii)
         console.print("5、求轴上的载荷", style="yellow")
         console.print("6、按弯扭合成应力校核轴的强度", style="yellow")
         console.print("7、轴上零件的周向固定", style="yellow")
@@ -130,6 +132,12 @@ class AxisAndStrengthCheck:
 
 
 if __name__ == '__main__':
+    print('(在本次设计中为减轻设计负担，只进行低速轴的强度校核)',
+          '\n查表15-1选取轴的材料为45钢调质处理，硬度217~255HBs，'
+          '抗拉强度极限σ_B = 640MPa'
+          '，屈服极限σ_S = 355MPa'
+          '，弯曲疲劳极限σ_-1 = 275MPa'
+          '，许用弯曲应力[σ_-1] = 60MPa')
     console.print("（一）高速轴的设计计算", style='#FF6100')
     axis_1 = Axis(num=1, alpha=20, delta_1=18.44, d=58.5, phi_r=1 / 3, p=3.50, n=1440, t=22.97)
 
