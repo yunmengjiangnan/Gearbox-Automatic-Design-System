@@ -274,14 +274,19 @@ print('(在本次设计中为减轻设计负担，只进行低速轴的强度校
       '，弯曲疲劳极限σ_-1 = 275MPa'
       '，许用弯曲应力[σ_-1] = 60MPa')
 console.print("（一）高速轴的设计计算", style='#FF6100')
-axis_1 = ax.Axis(num=1, alpha=20, delta_1=18.44, d=d_1, phi_r=1/3, p=P_1, n=n_1, t=T_1)
+axis_1 = ax.HighSpeedShaft(num=1, d=d_m1, phi_r=1/3, p=P_1, n=n_1, t=T_1)
 
 console.print("（二）中速轴的设计计算", style='#FF6100')
-axis_2 = ax.Axis(num=2, alpha=20, delta_1=18.44, d=d_2, phi_r=1/3, p=P_2, n=n_2, t=T_2)
+axis_2 = ax.MediumSpeedShaft(num=2, delta_1=bevel_gear_C.delta_1, beta=beta, d_1=d_m2, d_2=helical_spur_gear_D.d_1, p=P_2, n=n_2, t=T_2)
 
 console.print("（三）低速轴的设计计算", style='#FF6100')
-axis_3 = ax.AxisAndStrengthCheck(num=1, alpha=20, delta_1=18.44, d=d_3)
+axis_3 = ax.LowSpeedShaft(num=1, alpha=20, delta_1=18.44, d=helical_spur_gear_D.d_2, phi_r=1/3, p=P_3, n=n_3, t=T_3)
 
 console.print("九、滚动轴承的校核", style="red")
 console.print("（一）高速轴上的轴承", style='#FF6100')
-rolling_bearing_1 = RollingBearing()
+# rolling_bearing_1 = RollingBearing()
+
+console.print("十、键的选择及强度校核", style="red")
+print('键、轴、轮毂材料都是钢，由参考文献[2]表6-2查得许用挤压应力 ，取[σ_p] = 100MPa ~ 120MPa，取[σ_p] = 115MPa。'
+      '\n说明：本次全部选择圆头普通平键，由于键是标准件，其宽和高是按轴的直径来取的。键的长度一般比连接的轮毂略小，自行取定。')
+console.print("(一)高速轴上的键联接", style='#FF6100')
