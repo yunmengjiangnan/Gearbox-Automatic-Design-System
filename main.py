@@ -22,9 +22,9 @@ import axis as ax
 # 已知条件
 from rolling_bearing import RollingBearing
 
-F = 8
-v = 0.37
-d = 351
+F = 5
+v = 0.8
+d = 390
 # 实例化一个输出控制端
 console = Console()
 console.print("一、设计任务：", style="red")
@@ -34,13 +34,16 @@ table_1.add_column('组数')
 table_1.add_column('输送链的牵引力F（KG）')
 table_1.add_column('输送链的速度v(m/s)')
 table_1.add_column('输送链链轮节圆直径d(mm)')
-table_1.add_row('第六组', '8', '0.37', '351')
+table_1.add_row('第六组', str(F), str(v), str(d))
 print(table_1)
 # 计算工作寿命
+year = 10
+day = 300
+hour = 12
 print('注：1.链板式输送机工作时，运转方向不变，工作载荷稳定。'
-      '\n    2.工作寿命15年，每年300个工作日，每日工作16小时。')
-t = 15 * 300 * 16
-print('工作寿命：t=15×300×16h=7.2×10^4 h')
+      '\n    2.工作寿命', year, '年，每年', day, '个工作日，每日工作', hour, '小时。')
+t = year * day * hour
+print('工作寿命：t=', year, '×', day, '×', hour, 'h = ', '%e' % t, 'h')
 console.print("二、传动方案的拟定及说明", style="red")
 print('如上图课程设计任务书上布置简图所示，传动方案采用圆锥圆柱齿轮减速箱：'
       '\n圆锥齿轮置于高速极，以免使圆锥齿轮尺寸过大加工困难；'
@@ -60,8 +63,8 @@ P_d = mt.Input_Power(P_W, eta)
 # print('选YX3系列132S-4型号电动机，主要技术数据如下：'
 #       '\n额定功率：5.5 kw'
 #       '\n满载转速：1440r/min')
-print('选Y112M-4型号电动机，主要技术数据如下：'
-      '\n额定功率：4 kw'
+print('选YX3系列132S-4型号电动机，主要技术数据如下：'
+      '\n额定功率：5.5 kw'
       '\n满载转速：1440 r/min')
 
 # 四、传动装置的总传动比及其分配
@@ -274,13 +277,14 @@ print('(在本次设计中为减轻设计负担，只进行低速轴的强度校
       '，弯曲疲劳极限σ_-1 = 275MPa'
       '，许用弯曲应力[σ_-1] = 60MPa')
 console.print("（一）高速轴的设计计算", style='#FF6100')
-axis_1 = ax.HighSpeedShaft(num=1, d=d_m1, phi_r=1/3, p=P_1, n=n_1, t=T_1)
+axis_1 = ax.HighSpeedShaft(num=1, d=d_m1, phi_r=1 / 3, p=P_1, n=n_1, t=T_1)
 
 console.print("（二）中速轴的设计计算", style='#FF6100')
-axis_2 = ax.MediumSpeedShaft(num=2, delta_1=bevel_gear_C.delta_1, beta=beta, d_1=d_m2, d_2=helical_spur_gear_D.d_1, p=P_2, n=n_2, t=T_2)
+axis_2 = ax.MediumSpeedShaft(num=2, delta_1=bevel_gear_C.delta_1, beta=beta, d_1=d_m2, d_2=helical_spur_gear_D.d_1,
+                             p=P_2, n=n_2, t=T_2)
 
 console.print("（三）低速轴的设计计算", style='#FF6100')
-axis_3 = ax.LowSpeedShaft(num=1, alpha=20, delta_1=18.44, d=helical_spur_gear_D.d_2, phi_r=1/3, p=P_3, n=n_3, t=T_3)
+axis_3 = ax.LowSpeedShaft(num=1, alpha=20, delta_1=18.44, d=helical_spur_gear_D.d_2, phi_r=1 / 3, p=P_3, n=n_3, t=T_3)
 
 console.print("九、滚动轴承的校核", style="red")
 console.print("（一）高速轴上的轴承", style='#FF6100')
