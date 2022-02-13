@@ -76,9 +76,11 @@ class HighSpeedShaft:
         console.print("（２）根据轴向定位要求确定轴的各段直径和长度", style="yellow")
         self.d_i_ii = self.d_min
         self.d_ii_iii = self.d_i_ii + 2
+        self.d_iii_iv = math.ceil(self.d_ii_iii / 5) * 5
         self.l_i_ii = 36
         self.l_ii_iii = 32
-        self.d_iii_iv = math.ceil(self.d_ii_iii / 5) * 5
+        self.d_D_T =
+        self.l_iii_iv = 19
         self.D = 52
         print('选取原则：定位轴肩的高度h=(0.07~0.1)d ,非定位轴肩高度一般取1~2mm为了满足半联轴器的轴向定位要求，Ⅰ－Ⅱ轴段右端需制出一轴肩所以',
               '\n        d_I_II =', self.d_i_ii, 'L_I_II =', self.l_i_ii,
