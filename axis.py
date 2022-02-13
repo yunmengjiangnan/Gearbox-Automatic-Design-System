@@ -31,7 +31,7 @@ def the_force_acting_on_the_helical_gear(d, T, alpha=20, delta_1=14.15):
 
 
 class HighSpeedShaft:
-    def __init__(self, num, d, phi_r, p, n, t):
+    def __init__(self, num, d, phi_r, p, n, t, bearing_D, bearing_T):
         console.print('1、求输入轴上的功率P', num, '、转速n', num, '和转矩T', num, style="yellow")
         self.P = p
         self.n = n
@@ -77,10 +77,18 @@ class HighSpeedShaft:
         self.d_i_ii = self.d_min
         self.d_ii_iii = self.d_i_ii + 2
         self.d_iii_iv = math.ceil(self.d_ii_iii / 5) * 5
+        self.d_iv_v = self.d_iii_iv + 5
+        self.d_v_vi = self.d_iii_iv
+        self.d_vi_vii = self.d_v_vi - 2
+        self.d_vii_viii = self.d_i_ii
+
         self.l_i_ii = 36
         self.l_ii_iii = 32
-        self.d_D_T = 16.25
+        self.bearing_d = self.d_iii_iv
+        self.bearing_D = bearing_D
+        self.bearing_T = bearing_T
         self.l_iii_iv = 19
+
         self.D = 52
         print('选取原则：定位轴肩的高度h=(0.07~0.1)d ,非定位轴肩高度一般取1~2mm为了满足半联轴器的轴向定位要求，Ⅰ－Ⅱ轴段右端需制出一轴肩所以',
               '\n        d_I_II =', self.d_i_ii, 'L_I_II =', self.l_i_ii,
@@ -88,9 +96,9 @@ class HighSpeedShaft:
               '\n        Ⅲ~Ⅳ处与滚动轴承配合，考虑到滚动轴承是标准件，内径为5的倍数，故取',
               '\n        d_III_IV =', self.d_iii_iv,
               '\n        选取相应的轴承，因轴承同时受有径向力和轴向力的作用，故选用单列圆锥滚子轴承。参考工作要求，并根据'
-              'd_III_IV =', self.d_iii_iv, '，查参考文献[1] P：75表6－７，取０基本游隙组、标准精度级的单列圆锥滚子轴承30205，其尺寸为',
-              '\n        d × D × T =', self.d_iii_iv, 'mm ×', self.D, 'mm × 16.25mm',
-              '\n        因此取')
+              'd_III_IV =', self.d_iii_iv, '，查参考文献P：79表6－７，取０基本游隙组、标准精度级的单列圆锥滚子轴承30205，其尺寸为',
+              '\n        d × D × T =', self.d_iii_iv, 'mm ×', self.bearing_D, 'mm × ', self.bearing_T, 'mm',
+              '\n        因此取L_III_IV =', self.l_iii_iv, 'mm')
         console.print("5、轴上零件的周向固定", style="yellow")
         console.print("6、轴上倒角与圆角", style="yellow")
 
