@@ -82,12 +82,18 @@ class HighSpeedShaft:
         self.d_vi_vii = self.d_v_vi - 2
         self.d_vii_viii = self.d_i_ii
 
-        self.l_i_ii = 36
-        self.l_ii_iii = 32
         self.bearing_d = self.d_iii_iv
         self.bearing_D = bearing_D
         self.bearing_T = bearing_T
+
+        self.l_i_ii = 36
+        self.l_ii_iii = 32
         self.l_iii_iv = 19
+        self.l_iv_v = 60
+        self.l_v_vi = 19
+        self.l_vi_vii = 18
+        self.l_vii_viii = 32
+        # 长度真不知道咋算的
 
         self.D = 52
         print('选取原则：定位轴肩的高度h=(0.07~0.1)d ,非定位轴肩高度一般取1~2mm为了满足半联轴器的轴向定位要求，Ⅰ－Ⅱ轴段右端需制出一轴肩所以',
@@ -95,11 +101,16 @@ class HighSpeedShaft:
               '\n        d_II_III =', self.d_ii_iii, 'L_II_III =', self.l_ii_iii,
               '\n        Ⅲ~Ⅳ处与滚动轴承配合，考虑到滚动轴承是标准件，内径为5的倍数，故取',
               '\n        d_III_IV =', self.d_iii_iv,
-              '\n        选取相应的轴承，因轴承同时受有径向力和轴向力的作用，故选用单列圆锥滚子轴承。参考工作要求，并根据'
+              '\n        选取相应的轴承，因轴承同时受有径向力和轴向力的作用，故选用单列圆锥滚子轴承。参考工作要求，并根据',
               'd_III_IV =', self.d_iii_iv, '，查参考文献P：79表6－７，取０基本游隙组、标准精度级的单列圆锥滚子轴承30205，其尺寸为',
               '\n        d × D × T =', self.d_iii_iv, 'mm ×', self.bearing_D, 'mm × ', self.bearing_T, 'mm',
-              '\n        因此取L_III_IV =', self.l_iii_iv, 'mm')
+              '\n        因此取L_III_IV =', self.l_iii_iv, 'mm',
+              '\n        同理，d_V_VI =', self.d_v_vi, 'mm   L_V_VI =', self.l_v_vi, 'mm',
+              '\n        取   d_IV_V =', self.d_iv_v, 'mm   L_IV_V =', self.l_iv_v, 'mm',
+              '\n             d_VI_VII =', self.d_vi_vii, 'mm    L_VI_VII =', self.l_vi_vii, 'mm',
+              '\n             d_VII_VIII =', self.d_vii_viii, 'mm   L_VII_VIII =', self.l_vii_viii, 'mm')
         console.print("5、轴上零件的周向固定", style="yellow")
+
         console.print("6、轴上倒角与圆角", style="yellow")
 
 
