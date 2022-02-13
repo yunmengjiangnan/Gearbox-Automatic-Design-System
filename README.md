@@ -5,7 +5,7 @@
 该示例代码仅供演示使用，其中参数请根据实际情况进行调整
 建议放在 `.python` 目录下。
 >前提条件：本程序需要已经安装rich和numpy库。
-
+## 运行
 以在 `.python` 为例：
 ```bash
 cd D:/.code/.python/Gearbox-Automatic-Design-System
