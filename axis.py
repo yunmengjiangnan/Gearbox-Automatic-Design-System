@@ -286,25 +286,28 @@ class LowSpeedShaft:
               '\n        取   d_IV_V =', self.d_iv_v, 'mm   L_IV_V =', self.l_iv_v, 'mm',
               '\n             d_VI_VII =', self.d_vi_vii, 'mm    L_VI_VII =', self.l_vi_vii, 'mm',
               '\n             d_VII_VIII =', self.d_vii_viii, 'mm   L_VII_VIII =', self.l_vii_viii, 'mm')
-        console.print("5、轴上零件的周向固定", style="yellow")
-        console.print("1)齿轮与轴的周向定位采用平键联接。", style="green")
+        console.print("5、求轴上的载荷", style="yellow")
 
-        self.i_ii_b = 6
-        self.i_ii_h = 6
-        self.i_ii_l = 28
+        console.print("6、按弯扭合成应力校核轴的强度", style="yellow")
 
-        print('I-II段平键，按d_I_II =', self.d_i_ii, ',由参考文献表4-1查得平键的截面'
-                                                '\nb =', self.i_ii_b, 'mm，h =', self.i_ii_h, 'mm，由该轴段长度取L =',
-              self.i_ii_l, 'mm 。'
-                           '\nVII-VIII段平键，按d_I_II =', self.d_vii_viii, '，由参考文献表4-1查得平键的'
-                                                                       '\n截面b =', self.vii_viii_b, 'mm，h =',
-              self.vii_viii_h, 'mm，由该轴段长度取L =', self.vii_viii_l, 'mm。'
-                                                                 '\n同时为了保证齿轮与轴配合得有良好得对中性，故选择齿轮轮毂与轴的配合选H7/n6。')
-        console.print("2)滚动轴承与轴的周向定位，是借过渡配合来保证的，此处选轴的尺寸公差为m6。", style="green")
-        console.print("6、轴上倒角与圆角", style="yellow")
-        print('根据参考文献表，取轴端倒角C1，各轴肩处的圆角半径取C0.5。')
         console.print("7、轴上零件的周向固定", style="yellow")
+        console.print("   1)齿轮与轴的周向定位采用平键联接。", style="green")
+
+        self.ii_iii_b = 16
+        self.ii_iii_h = 10
+        self.ii_iii_l = 40
+        self.vi_vii_b = 12
+        self.vi_vii_h = 8
+        self.vi_vii_l = 45
+
+        print('   II-III段采用普通平键联接，按d_II_III =', self.d_ii_iii, ',由参考文献表4-1查得平键的截面'
+              '\n   b =', self.ii_iii_b, 'mm，h =', self.ii_iii_h, 'mm，由该轴段长度取L =', self.ii_iii_l, 'mm 。'
+              '\n   VI-VII段采用普通平键联接，按d_VI_VII =', self.d_vi_vii, '，由参考文献表4-1查得平键的'
+              '\n   截面b =', self.vi_vii_b, 'mm，h =', self.vi_vii_h, 'mm，由该轴段长度取L =', self.vi_vii_l, 'mm。'
+              '\n   同时为了保证齿轮与轴配合得有良好得对中性，故选择齿轮轮毂与轴的配合选H7/n6。')
+        console.print("   2)滚动轴承与轴的周向定位，是借过渡配合来保证的，此处选轴的尺寸公差为m6。", style="green")
         console.print("8、轴上倒角与圆角", style="yellow")
+        print('根据参考文献表，取轴端倒角C1，各轴肩处的圆角半径取C0.5。')
 
 
 if __name__ == '__main__':
