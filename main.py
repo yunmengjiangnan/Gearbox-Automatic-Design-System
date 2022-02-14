@@ -277,7 +277,7 @@ console.print("（一）高速轴的设计计算", style='#FF6100')
 axis_1 = ax.HighSpeedShaft(num=1, d=d_m1, phi_r=1/3, p=P_1, n=n_1, t=T_1, bearing_D=52, bearing_T=16.25)
 
 console.print("（二）中速轴的设计计算", style='#FF6100')
-axis_2 = ax.MediumSpeedShaft(num=2, delta_1=bevel_gear_C.delta_1, beta=beta, d_1=d_m2, d_2=helical_spur_gear_D.d_1, p=P_2, n=n_2, t=T_2)
+axis_2 = ax.MediumSpeedShaft(num=2, delta_1=bevel_gear_C.delta_1, beta=beta, d_1=d_m2, d_2=helical_spur_gear_D.d_1, p=P_2, n=n_2, t=T_2, bearing_D=62, bearing_T=18.25)
 
 console.print("（三）低速轴的设计计算", style='#FF6100')
 axis_3 = ax.LowSpeedShaft(num=1, alpha=20, delta_1=18.44, d=helical_spur_gear_D.d_2, phi_r=1/3, p=P_3, n=n_3, t=T_3)

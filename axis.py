@@ -110,12 +110,25 @@ class HighSpeedShaft:
               '\n             d_VI_VII =', self.d_vi_vii, 'mm    L_VI_VII =', self.l_vi_vii, 'mm',
               '\n             d_VII_VIII =', self.d_vii_viii, 'mm   L_VII_VIII =', self.l_vii_viii, 'mm')
         console.print("5、轴上零件的周向固定", style="yellow")
-
+        console.print("1)齿轮与轴的周向定位采用平键联接。", style="green")
+        self.i_ii_b = 6
+        self.i_ii_h = 6
+        self.i_ii_l = 28
+        self.vii_viii_b = 6
+        self.vii_viii_h = 6
+        self.vii_viii_l = 22
+        print('I-II段平键，按d_I_II =', self.d_i_ii, ',由参考文献表4-1查得平键的截面'
+              '\nb =', self.i_ii_b, 'mm，h =', self.i_ii_h, 'mm，由该轴段长度取L =', self.i_ii_l, 'mm 。'
+              '\nVII-VIII段平键，按d_I_II =', self.d_vii_viii, '，由参考文献表4-1查得平键的'
+              '\n截面b =', self.vii_viii_b, 'mm，h =', self.vii_viii_h, 'mm，由该轴段长度取L =', self.vii_viii_l, 'mm。'
+              '\n同时为了保证齿轮与轴配合得有良好得对中性，故选择齿轮轮毂与轴的配合选H7/n6。')
+        console.print("2)滚动轴承与轴的周向定位，是借过渡配合来保证的，此处选轴的尺寸公差为m6。", style="green")
         console.print("6、轴上倒角与圆角", style="yellow")
+        print('根据参考文献表，取轴端倒角C1，各轴肩处的圆角半径取C0.5。')
 
 
 class MediumSpeedShaft:
-    def __init__(self, num, d_1, d_2, p, n, t, delta_1, beta):
+    def __init__(self, num, d_1, d_2, p, n, t, delta_1, beta, bearing_D, bearing_T):
         console.print('1、求输入轴上的功率P', num, '、转速n', num, '和转矩T', num, style="yellow")
         self.P = p
         self.n = n
@@ -152,15 +165,36 @@ class MediumSpeedShaft:
               '\n考虑到这根轴有一个键，设计值加大10%，又因为最小直径处为两端，因为与轴承相连，所以取d_min =', self.d_min, 'mm。')
 
         console.print("4、轴的结构设计", style="yellow")
-        console.print("（1）拟订轴上零件的装配方案", style="yellow")
-        console.print("（２）根据轴向定位要求确定轴的各段直径和长度", style="yellow")
+        console.print("(1)拟订轴上零件的装配方案", style="green")
+        console.print("(2)根据轴向定位要求确定轴的各段直径和长度", style="green")
         self.d_i_ii = self.d_min
+        self.d_ii_iii = self.d_i_ii + 5
+        self.d_iii_iv = 47.3  # 搞不懂怎么算的
+        self.d_iv_v = 34  # 不会
+        self.d_v_vi = 28  # 不会
+        self.d_vi_vii = 48  # 不会
+
+        self.bearing_d = self.d_i_ii
+        self.bearing_D = bearing_D
+        self.bearing_T = bearing_T
+
         self.l_i_ii = 20
         self.l_ii_iii = 30
-        print('选取原则：定位轴肩的高度h=(0.07~0.1)d ,非定位轴肩高度一般取1~2mm为了满足半联轴器的轴向定位要求，Ⅰ－Ⅱ轴段右端需制出一轴肩所以',
-              '\n        d_I_II =', self.d_i_ii, 'L_I_II =', self.l_i_ii,
-              '\n        d_II_III =', self.d_i_ii + 5, 'L_II_III =', self.l_ii_iii)
+        self.l_iii_iv = 35
+        self.l_iv_v = 20
+        self.l_v_vi = 40
+        self.l_vi_vii = 48
+        print('   d_I_II = d_VI_VII', self.d_i_ii, 'L_I_II =', self.l_i_ii, 'mm， L_VI_VII =', self.l_vi_vii, 'mm',
+              '\n   同时选取相应的轴承，因轴承同时受有径向力和轴向力的作用，故选用单'
+              '\n   列圆锥滚子轴承。参考文献表6－７，取０基本游隙组、标准精度级'
+              '\n   的单列圆锥滚子轴承30305，其尺寸为'
+              '\n   d × D × T =', self.d_i_ii, 'mm ×', self.bearing_D, 'mm × ', self.bearing_T, 'mm'
+              '\n   d_II_III =', self.d_ii_iii, 'mm     L_II_III =', self.l_ii_iii, 'mm（要考虑轴的整体布置）'
+              '\n   d_III_IV =', self.d_iii_iv, 'mm   L_III_IV =', self.l_iii_iv, 'mm（小斜齿轮部分数据）'
+              '\n   d_IV_V =', self.d_iv_v, 'mm       L_IV_V =', self.l_iv_v, 'mm'
+              '\n   d_V_VI =', self.d_v_vi, 'mm       L_V_VI =', self.l_v_vi, 'mm')
         console.print("5、轴上零件的周向固定", style="yellow")
+
         console.print("6、轴上倒角与圆角", style="yellow")
 
 
