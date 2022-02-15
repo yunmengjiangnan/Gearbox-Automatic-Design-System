@@ -312,11 +312,18 @@ class LowSpeedShaft:
         table.add_column('垂直面Y')
         table.add_row('支反力F_A', str(self.F_AZ), str(self.F_AY))
         table.add_row('支反力F_C', str(self.F_CZ), str(self.F_CY))
-        table.add_row('弯矩M', str(self.M_Z), str(self.F_CY))
-        table.add_row('支反力F_A', str(self.M_Z), str(self.F_BY2))
-        table.add_row('支反力F_A', str(self.F_AZ), str(self.F_AY))
+        table.add_row('弯矩M', str(self.M_Z), str(self.M_CY))
+        table.add_row('弯矩M', str(self.M_Z), str(self.M_BY2))
+        table.add_row('总弯矩', str(self.M_1), str(self.M_1))
+        table.add_row('总弯矩', str(self.M_2), str(self.M_2))
+        table.add_row('扭矩', str(self.T_3), str(self.T_3))
+        print(table)
 
         console.print("6、按弯扭合成应力校核轴的强度", style="yellow")
+        self.alpha = 0.6
+        print('   进行校核时，通常只校核轴上承受最大弯矩和扭矩的截面（即危险'
+              '\n   截面B）的强度，根据式参考文献15-5及上表中的数值，并取α =', self.alpha, '，轴的计算应力',
+              '\n   σ_ca = ')
 
         console.print("7、轴上零件的周向固定", style="yellow")
         console.print("   1)齿轮与轴的周向定位采用平键联接。", style="green")
