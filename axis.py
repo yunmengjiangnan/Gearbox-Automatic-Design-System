@@ -118,10 +118,12 @@ class HighSpeedShaft:
         self.vii_viii_h = 6
         self.vii_viii_l = 22
         print('I-II段平键，按d_I_II =', self.d_i_ii, ',由参考文献表4-1查得平键的截面'
-              '\nb =', self.i_ii_b, 'mm，h =', self.i_ii_h, 'mm，由该轴段长度取L =', self.i_ii_l, 'mm 。'
-              '\nVII-VIII段平键，按d_I_II =', self.d_vii_viii, '，由参考文献表4-1查得平键的'
-              '\n截面b =', self.vii_viii_b, 'mm，h =', self.vii_viii_h, 'mm，由该轴段长度取L =', self.vii_viii_l, 'mm。'
-              '\n同时为了保证齿轮与轴配合得有良好得对中性，故选择齿轮轮毂与轴的配合选H7/n6。')
+                                                '\nb =', self.i_ii_b, 'mm，h =', self.i_ii_h, 'mm，由该轴段长度取L =',
+              self.i_ii_l, 'mm 。'
+                           '\nVII-VIII段平键，按d_I_II =', self.d_vii_viii, '，由参考文献表4-1查得平键的'
+                                                                       '\n截面b =', self.vii_viii_b, 'mm，h =',
+              self.vii_viii_h, 'mm，由该轴段长度取L =', self.vii_viii_l, 'mm。'
+                                                                 '\n同时为了保证齿轮与轴配合得有良好得对中性，故选择齿轮轮毂与轴的配合选H7/n6。')
         console.print("2)滚动轴承与轴的周向定位，是借过渡配合来保证的，此处选轴的尺寸公差为m6。", style="green")
         console.print("6、轴上倒角与圆角", style="yellow")
         print('根据参考文献表，取轴端倒角C1，各轴肩处的圆角半径取C0.5。')
@@ -145,7 +147,8 @@ class MediumSpeedShaft:
               '，T_', num, '=', self.T)
         console.print("2、求作用在齿轮上的力", style="yellow")
         self.F_t1, self.F_r1, self.F_a1 = the_force_acting_on_the_bevel_gear(self.d_1, T=self.T, delta_1=self.delta_1)
-        self.F_t2, self.F_r2, self.F_a2 = the_force_acting_on_the_helical_gear(self.d_2, T=self.T, delta_1=beta*180/pi)
+        self.F_t2, self.F_r2, self.F_a2 = the_force_acting_on_the_helical_gear(self.d_2, T=self.T,
+                                                                               delta_1=beta * 180 / pi)
         table_2 = Table(show_header=True, header_style='bold magenta')
         table_2.add_column()
         table_2.add_column('大锥齿轮d^,=d_m2=150mm')
@@ -162,7 +165,8 @@ class MediumSpeedShaft:
         self.T_ca = self.K_A * self.T * 1000
         print('因为选取轴的材料为45钢调质处理，根据参考文献[2]表15-3，取A_0 =', self.A_0, '于是得',
               'd_min = A_0 * cbrt(P / n) =', self.d, 'mm'
-              '\n考虑到这根轴有一个键，设计值加大10%，又因为最小直径处为两端，因为与轴承相连，所以取d_min =', self.d_min, 'mm。')
+                                                     '\n考虑到这根轴有一个键，设计值加大10%，又因为最小直径处为两端，因为与轴承相连，所以取d_min =', self.d_min,
+              'mm。')
 
         console.print("4、轴的结构设计", style="yellow")
         console.print("(1)拟订轴上零件的装配方案", style="green")
@@ -189,10 +193,13 @@ class MediumSpeedShaft:
               '\n   列圆锥滚子轴承。参考文献表6－７，取０基本游隙组、标准精度级'
               '\n   的单列圆锥滚子轴承30305，其尺寸为'
               '\n   d × D × T =', self.d_i_ii, 'mm ×', self.bearing_D, 'mm × ', self.bearing_T, 'mm'
-              '\n   d_II_III =', self.d_ii_iii, 'mm     L_II_III =', self.l_ii_iii, 'mm（要考虑轴的整体布置）'
-              '\n   d_III_IV =', self.d_iii_iv, 'mm   L_III_IV =', self.l_iii_iv, 'mm（小斜齿轮部分数据）'
-              '\n   d_IV_V =', self.d_iv_v, 'mm       L_IV_V =', self.l_iv_v, 'mm'
-              '\n   d_V_VI =', self.d_v_vi, 'mm       L_V_VI =', self.l_v_vi, 'mm')
+                                                                                                '\n   d_II_III =',
+              self.d_ii_iii, 'mm     L_II_III =', self.l_ii_iii, 'mm（要考虑轴的整体布置）'
+                                                                 '\n   d_III_IV =', self.d_iii_iv, 'mm   L_III_IV =',
+              self.l_iii_iv, 'mm（小斜齿轮部分数据）'
+                             '\n   d_IV_V =', self.d_iv_v, 'mm       L_IV_V =', self.l_iv_v, 'mm'
+                                                                                             '\n   d_V_VI =',
+              self.d_v_vi, 'mm       L_V_VI =', self.l_v_vi, 'mm')
 
         self.V_VI_b = 8
         self.V_VI_h = 7
@@ -201,8 +208,9 @@ class MediumSpeedShaft:
         console.print("5、轴上零件的周向固定", style="yellow")
         console.print("1)齿轮与轴的周向定位采用平键联接。", style="green")
         print('V-VI段采用普通平键联接，按d_V_VI =', self.d_v_vi, 'mm,由参考文献表4-1查得'
-              '\n平键的截面，b=', self.V_VI_b, 'mm，h=', self.V_VI_h, 'mm，由该轴段长度取L =', self.V_VI_l, 'mm。'
-              '\n同时为了保证齿轮与轴配合得有良好得对中性，固选择齿轮轮毂与轴得配合选H7/n6。')
+                                                      '\n平键的截面，b=', self.V_VI_b, 'mm，h=', self.V_VI_h, 'mm，由该轴段长度取L =',
+              self.V_VI_l, 'mm。'
+                           '\n同时为了保证齿轮与轴配合得有良好得对中性，固选择齿轮轮毂与轴得配合选H7/n6。')
         console.print("6、轴上倒角与圆角", style="yellow")
         print('根据参考文献表，取轴端倒角C1，各轴肩处的圆角半径取C0.5。')
 
@@ -287,7 +295,26 @@ class LowSpeedShaft:
               '\n(1)受力简图',
               '\n   从轴的结构图以及弯矩和扭矩图可以看出截面C是轴的危险截面。'
               '\n   先计算出各截面的值列于下表。')
+        self.F_AZ = 199.6
+        self.F_CZ = 55.8
+        self.F_AY = -1382.6
+        self.F_CY = 6438.2
+        self.M_Z = -6586.8
+        self.M_CY = -242218.6
+        self.M_BY2 = -45625.8
+        self.M_1 = abs(self.M_CY)
+        self.M_2 = math.sqrt(self.M_Z**2 + self.M_BY2**2)
+        self.T_3 = 311.31
 
+        table = Table(show_header=True, header_style='bold magenta')
+        table.add_column('载荷')
+        table.add_column('水平面Z')
+        table.add_column('垂直面Y')
+        table.add_row('支反力F_A', str(self.F_AZ), str(self.F_AY))
+        table.add_row('支反力F_C', str(self.F_CZ), str(self.F_CY))
+        table.add_row('弯矩M', str(self.M_Z), str(self.F_CY))
+        table.add_row('支反力F_A', str(self.M_Z), str(self.F_BY2))
+        table.add_row('支反力F_A', str(self.F_AZ), str(self.F_AY))
 
         console.print("6、按弯扭合成应力校核轴的强度", style="yellow")
 
@@ -302,10 +329,12 @@ class LowSpeedShaft:
         self.vi_vii_l = 45
 
         print('   II-III段采用普通平键联接，按d_II_III =', self.d_ii_iii, ',由参考文献表4-1查得平键的截面'
-              '\n   b =', self.ii_iii_b, 'mm，h =', self.ii_iii_h, 'mm，由该轴段长度取L =', self.ii_iii_l, 'mm 。'
-              '\n   VI-VII段采用普通平键联接，按d_VI_VII =', self.d_vi_vii, '，由参考文献表4-1查得平键的'
-              '\n   截面b =', self.vi_vii_b, 'mm，h =', self.vi_vii_h, 'mm，由该轴段长度取L =', self.vi_vii_l, 'mm。'
-              '\n   同时为了保证齿轮与轴配合得有良好得对中性，故选择齿轮轮毂与轴的配合选H7/n6。')
+                                                               '\n   b =', self.ii_iii_b, 'mm，h =', self.ii_iii_h,
+              'mm，由该轴段长度取L =', self.ii_iii_l, 'mm 。'
+                                              '\n   VI-VII段采用普通平键联接，按d_VI_VII =', self.d_vi_vii, '，由参考文献表4-1查得平键的'
+                                                                                                 '\n   截面b =',
+              self.vi_vii_b, 'mm，h =', self.vi_vii_h, 'mm，由该轴段长度取L =', self.vi_vii_l, 'mm。'
+                                                                                      '\n   同时为了保证齿轮与轴配合得有良好得对中性，故选择齿轮轮毂与轴的配合选H7/n6。')
         console.print("   2)滚动轴承与轴的周向定位，是借过渡配合来保证的，此处选轴的尺寸公差为m6。", style="green")
         console.print("8、轴上倒角与圆角", style="yellow")
         print('   根据参考文献表，取轴端倒角C1，各轴肩处的圆角半径取C0.5。')
