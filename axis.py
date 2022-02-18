@@ -336,12 +336,11 @@ class LowSpeedShaft:
         self.vi_vii_l = 45
 
         print('   II-III段采用普通平键联接，按d_II_III =', self.d_ii_iii, ',由参考文献表4-1查得平键的截面'
-                                                               '\n   b =', self.ii_iii_b, 'mm，h =', self.ii_iii_h,
+              '\n   b =', self.ii_iii_b, 'mm，h =', self.ii_iii_h,
               'mm，由该轴段长度取L =', self.ii_iii_l, 'mm 。'
-                                              '\n   VI-VII段采用普通平键联接，按d_VI_VII =', self.d_vi_vii, '，由参考文献表4-1查得平键的'
-                                                                                                 '\n   截面b =',
-              self.vi_vii_b, 'mm，h =', self.vi_vii_h, 'mm，由该轴段长度取L =', self.vi_vii_l, 'mm。'
-                                                                                      '\n   同时为了保证齿轮与轴配合得有良好得对中性，故选择齿轮轮毂与轴的配合选H7/n6。')
+              '\n   VI-VII段采用普通平键联接，按d_VI_VII =', self.d_vi_vii, '，由参考文献表4-1查得平键的'
+              '\n   截面b =', self.vi_vii_b, 'mm，h =', self.vi_vii_h, 'mm，由该轴段长度取L =', self.vi_vii_l, 'mm。'
+              '\n   同时为了保证齿轮与轴配合得有良好得对中性，故选择齿轮轮毂与轴的配合选H7/n6。')
         console.print("   2)滚动轴承与轴的周向定位，是借过渡配合来保证的，此处选轴的尺寸公差为m6。", style="green")
         console.print("8、轴上倒角与圆角", style="yellow")
         print('   根据参考文献表，取轴端倒角C1，各轴肩处的圆角半径取C0.5。')
@@ -355,10 +354,10 @@ if __name__ == '__main__':
           '，弯曲疲劳极限σ_-1 = 275MPa'
           '，许用弯曲应力[σ_-1] = 60MPa')
     console.print("（一）高速轴的设计计算", style='#FF6100')
-    axis_1 = HighSpeedShaft(num=1, d=58.5, phi_r=1 / 3, p=3.50, n=1440, t=22.97)
+    axis_1 = HighSpeedShaft(num=1, d=58.5, phi_r=1 / 3, p=3.50, n=1440, t=22.97, bearing_T=52, bearing_D=16.25)
 
     console.print("（二）中速轴的设计计算", style='#FF6100')
-    # axis_2 = MediumSpeedShaft(num=2, alpha=20, delta_1=18.44, d=)
+    axis_2 = MediumSpeedShaft(num=2, delta_1=18.44, beta=0.255, d_1=150, d_2=49.5, p=3.21, n=480, t=63.87, bearing_D=62, bearing_T=18.25)
 
     console.print("（三）低速轴的设计计算", style='#FF6100')
-    # axis_3 = AxisAndStrengthCheck(num=1, alpha=20, delta_1=18.44, d=)
+    axis_3 = LowSpeedShaft(num=3, d=247.55, phi_r=1/3, p=3.08, n=96, t=306.73, bearing_D=100, bearing_T=27.25)
