@@ -18,6 +18,7 @@ import gear_ratio as gr
 import transmission_parameters as tp
 import gear_drive as gd
 import axis as ax
+import key as ky
 
 # 已知条件
 from rolling_bearing import RollingBearing
@@ -287,6 +288,9 @@ console.print("（一）高速轴上的轴承", style='#FF6100')
 # rolling_bearing_1 = RollingBearing()
 
 console.print("十、键的选择及强度校核", style="red")
-print('键、轴、轮毂材料都是钢，由参考文献[2]表6-2查得许用挤压应力 ，取[σ_p] = 100MPa ~ 120MPa，取[σ_p] = 115MPa。'
-      '\n说明：本次全部选择圆头普通平键，由于键是标准件，其宽和高是按轴的直径来取的。键的长度一般比连接的轮毂略小，自行取定。')
+print('  键、轴、轮毂材料都是钢，由参考文献表6-2查得许用挤压应力'
+      '\n  [σ_p] = 100MPa ~ 120MPa，取[σ_p] = 115MPa。'
+      '\n  说明：本次全部选择圆头普通平键，由于键是标准件，其宽和高是按轴的'
+      '\n  直径来取的。键的长度一般比连接的轮毂略小，自行取定。')
 console.print("(一)高速轴上的键联接", style='#FF6100')
+high_speed_key = ky.high_speed_key(part="I_II", d=axis_1.d_i_ii, L=axis_1.l_i_ii, b=6, h=6, l=28, T_1=axis_1.T)
