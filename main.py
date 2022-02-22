@@ -19,9 +19,9 @@ import transmission_parameters as tp
 
 # 已知条件
 
-F = 8
-v = 0.37
-d = 351
+F = 5
+v = 0.8
+d = 390
 # 实例化一个输出控制端
 console = Console()
 console.print("一、设计任务：", style="red")
