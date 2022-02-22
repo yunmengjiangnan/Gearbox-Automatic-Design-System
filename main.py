@@ -4,23 +4,20 @@
 # @File : main.py
 # @Software: PyCharm
 import math
-# import numpy as np
-from math import cos, pi, sqrt, tan, sin
+from math import cos, pi
 
-import numpy as np
 from rich import print
 from rich.console import Console
-from rich.table import Column, Table
-# from prettytable import PrettyTable
+from rich.table import Table
 
-import motor as mt
-import gear_ratio as gr
-import transmission_parameters as tp
-import gear_drive as gd
 import axis as ax
+import gear_drive as gd
+import gear_ratio as gr
+import key as ky
+import motor as mt
+import transmission_parameters as tp
 
 # 已知条件
-from rolling_bearing import RollingBearing
 
 F = 5
 v = 0.8
@@ -252,8 +249,8 @@ float_a = f_I * P * (2 * L_P - (Z_1 + Z_2))
 a = round(float_a)
 print('（4）计算链节数和中心距'
       '\n      初选中心距a_0=(30-50)p=', a_0_min, ' ~ ', a_0_max, 'mm,取a_0 =', a_0, 'mm'
-                                                                               '\n      相应的链长节数L_P0 =', L_P0, 'mm'
-                                                                                                              '\n      取链长节数L_P=',
+      '\n      相应的链长节数L_P0 =', L_P0, 'mm'
+      '\n      取链长节数L_P=',
       L_P,
       ' (L_P-Z_1)/(Z_2-Z_1 )=', (L_P - Z_1) / (Z_2 - Z_1),
       '\n      查表,并用差值法得中心距系数f_I=', f_I,
@@ -277,20 +274,39 @@ print('(在本次设计中为减轻设计负担，只进行低速轴的强度校
       '，弯曲疲劳极限σ_-1 = 275MPa'
       '，许用弯曲应力[σ_-1] = 60MPa')
 console.print("（一）高速轴的设计计算", style='#FF6100')
-axis_1 = ax.HighSpeedShaft(num=1, d=d_m1, phi_r=1 / 3, p=P_1, n=n_1, t=T_1)
+axis_1 = ax.HighSpeedShaft(num=1, d=d_m1, phi_r=1/3, p=P_1, n=n_1, t=T_1, bearing_D=52, bearing_T=16.25)
 
 console.print("（二）中速轴的设计计算", style='#FF6100')
 axis_2 = ax.MediumSpeedShaft(num=2, delta_1=bevel_gear_C.delta_1, beta=beta, d_1=d_m2, d_2=helical_spur_gear_D.d_1,
-                             p=P_2, n=n_2, t=T_2)
+                             p=P_2, n=n_2, t=T_2, bearing_D=62, bearing_T=18.25)
 
 console.print("（三）低速轴的设计计算", style='#FF6100')
-axis_3 = ax.LowSpeedShaft(num=1, alpha=20, delta_1=18.44, d=helical_spur_gear_D.d_2, phi_r=1 / 3, p=P_3, n=n_3, t=T_3)
+axis_3 = ax.LowSpeedShaft(num=3, d=helical_spur_gear_D.d_2, phi_r=1/3,
+                          p=P_3, n=n_3, t=T_3, bearing_D=100, bearing_T=27.25)
 
 console.print("九、滚动轴承的校核", style="red")
 console.print("（一）高速轴上的轴承", style='#FF6100')
 # rolling_bearing_1 = RollingBearing()
 
 console.print("十、键的选择及强度校核", style="red")
-print('键、轴、轮毂材料都是钢，由参考文献[2]表6-2查得许用挤压应力 ，取[σ_p] = 100MPa ~ 120MPa，取[σ_p] = 115MPa。'
-      '\n说明：本次全部选择圆头普通平键，由于键是标准件，其宽和高是按轴的直径来取的。键的长度一般比连接的轮毂略小，自行取定。')
+print('  键、轴、轮毂材料都是钢，由参考文献表6-2查得许用挤压应力'
+      '\n  [σ_p] = 100MPa ~ 120MPa，取[σ_p] = 115MPa。'
+      '\n  说明：本次全部选择圆头普通平键，由于键是标准件，其宽和高是按轴的'
+      '\n  直径来取的。键的长度一般比连接的轮毂略小，自行取定。')
 console.print("(一)高速轴上的键联接", style='#FF6100')
+high_speed_key = ky.high_speed_key(part_1="I_II", d_1=axis_1.d_i_ii, L_1=axis_1.l_i_ii,
+                                   b_1=6, h_1=6, l_1=28, T_1=axis_1.T,
+                                   part_2="VII_VIII", d_2=axis_1.d_vii_viii, L_2=axis_1.l_vii_viii,
+                                   b_2=6, h_2=6, l_2=22)
+
+console.print("(二)中速轴上的键联接", style='#FF6100')
+mid_speed_key = ky.medium_speed_key(part="V_VI", d=axis_2.d_v_vi, L=axis_2.l_v_vi, b=8, h=7, l=32, T_2=axis_2.T)
+
+console.print("(三)低速轴上的键联接", style='#FF6100')
+low_speed_key = ky.low_speed_key(part_1="II_III", d_1=axis_3.d_ii_iii, L_1=axis_3.l_ii_iii, b_1=16, h_1=10, l_1=40,
+                                 T_3=axis_3.T,
+                                 part_2="VI_VII", d_2=axis_3.d_vi_vii, L_2=axis_3.l_vi_vii, b_2=12, h_2=8, l_2=45)
+
+console.print("十一、箱体及附属部件设计设计:", style="red")
+console.print('参考参考文献表11－1(铸铁减速器箱体结构尺寸)，初步取如下尺寸：', style='#FF6100')
+print('未完待续。。。。。。。。。。')
