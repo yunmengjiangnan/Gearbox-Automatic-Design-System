@@ -70,7 +70,7 @@ console.print("四、传动装置的总传动比及其分配", style="red")
 i = gr.Total_Gear_Ratio(n)
 # 2、分配传动比(圆锥齿轮传动i_1/圆柱齿轮传动i_2/链传动i_3)
 i_1 = 3
-i_2 = 6
+i_2 = 5
 i_3 = gr.Transmission_Ratio_Assignment(i, i_1, i_2)
 
 # 五、计算传动装置的运动和动力参数
