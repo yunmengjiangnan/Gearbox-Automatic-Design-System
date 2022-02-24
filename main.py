@@ -16,6 +16,8 @@ import gear_ratio as gr
 import key as ky
 import motor as mt
 import transmission_parameters as tp
+import box_and_accessories as bx
+import end_cap as ec
 
 # 已知条件
 
@@ -249,8 +251,8 @@ float_a = f_I * P * (2 * L_P - (Z_1 + Z_2))
 a = round(float_a)
 print('（4）计算链节数和中心距'
       '\n      初选中心距a_0=(30-50)p=', a_0_min, ' ~ ', a_0_max, 'mm,取a_0 =', a_0, 'mm'
-      '\n      相应的链长节数L_P0 =', L_P0, 'mm'
-      '\n      取链长节数L_P=',
+                                                                               '\n      相应的链长节数L_P0 =', L_P0, 'mm'
+                                                                                                              '\n      取链长节数L_P=',
       L_P,
       ' (L_P-Z_1)/(Z_2-Z_1 )=', (L_P - Z_1) / (Z_2 - Z_1),
       '\n      查表,并用差值法得中心距系数f_I=', f_I,
@@ -274,14 +276,14 @@ print('(在本次设计中为减轻设计负担，只进行低速轴的强度校
       '，弯曲疲劳极限σ_-1 = 275MPa'
       '，许用弯曲应力[σ_-1] = 60MPa')
 console.print("（一）高速轴的设计计算", style='#FF6100')
-axis_1 = ax.HighSpeedShaft(num=1, d=d_m1, phi_r=1/3, p=P_1, n=n_1, t=T_1, bearing_D=52, bearing_T=16.25)
+axis_1 = ax.HighSpeedShaft(num=1, d=d_m1, phi_r=1 / 3, p=P_1, n=n_1, t=T_1, bearing_D=52, bearing_T=16.25)
 
 console.print("（二）中速轴的设计计算", style='#FF6100')
 axis_2 = ax.MediumSpeedShaft(num=2, delta_1=bevel_gear_C.delta_1, beta=beta, d_1=d_m2, d_2=helical_spur_gear_D.d_1,
                              p=P_2, n=n_2, t=T_2, bearing_D=62, bearing_T=18.25)
 
 console.print("（三）低速轴的设计计算", style='#FF6100')
-axis_3 = ax.LowSpeedShaft(num=3, d=helical_spur_gear_D.d_2, phi_r=1/3,
+axis_3 = ax.LowSpeedShaft(num=3, d=helical_spur_gear_D.d_2, phi_r=1 / 3,
                           p=P_3, n=n_3, t=T_3, bearing_D=100, bearing_T=27.25)
 
 console.print("九、滚动轴承的校核", style="red")
@@ -308,5 +310,13 @@ low_speed_key = ky.low_speed_key(part_1="II_III", d_1=axis_3.d_ii_iii, L_1=axis_
                                  part_2="VI_VII", d_2=axis_3.d_vi_vii, L_2=axis_3.l_vi_vii, b_2=12, h_2=8, l_2=45)
 
 console.print("十一、箱体及附属部件设计设计:", style="red")
-console.print('参考参考文献表11－1(铸铁减速器箱体结构尺寸)，初步取如下尺寸：', style='#FF6100')
+a = (helical_spur_gear_D.d_1 + helical_spur_gear_D.d_2) / 2  # 求圆柱齿轮中心距
+box = bx.box(a=a)
+accessories = bx.accessories(delta=box.delta, delta_1=box.delta_1, C_1=box.C_1, C_2=box.C_2, a=a, d=box.d_1)
+
+console.print("十一、箱体及附属部件设计设计:", style="red")
+print('略')
+
+console.print("十三、端盖设计", style="red")
+
 print('未完待续。。。。。。。。。。')
