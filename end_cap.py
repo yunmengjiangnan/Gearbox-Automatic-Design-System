@@ -50,6 +50,7 @@ class Cup:
         self.s_4 = 10
         self.s_3 = 10
         self.e_4 = 10
+        self.D = D
         self.D_1 = D_a
         self.D_0 = D + 2 * self.s_3 + 2.5 * d_3
         self.D_2 = self.D_0 + 2.5 * d_3
@@ -76,6 +77,7 @@ class HighSpeedEndCap:
         print('参照参考文献P172表11—12，并根据轴的几何尺寸，取如下参数，\n套杯内缘厚S_4=', self.cup.s_4,
               'mm，壁厚S_3=', self.cup.s_3,
               'mm，外缘厚e_4=', self.cup.e_4,
+              'mm， D =', self.cup.D,
               'mm，\n根据轴承轴向定位要求，取D_1=', self.cup.D_1,
               'mm，\n螺钉分布圆直径D_0=D+2S_3+2.5d_3=', self.cup.D_0,
               'mm，\n轴承盖凸缘直径D_2=D_0+2.5d_3=', self.cup.D_2,
