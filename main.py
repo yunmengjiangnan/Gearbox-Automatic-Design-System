@@ -10,6 +10,7 @@ from rich import print
 from rich.console import Console
 from rich.table import Table
 
+import axis
 import axis as ax
 import gear_drive as gd
 import gear_ratio as gr
@@ -276,15 +277,17 @@ print('(在本次设计中为减轻设计负担，只进行低速轴的强度校
       '，弯曲疲劳极限σ_-1 = 275MPa'
       '，许用弯曲应力[σ_-1] = 60MPa')
 console.print("（一）高速轴的设计计算", style='#FF6100')
-axis_1 = ax.HighSpeedShaft(num=1, d=d_m1, phi_r=1 / 3, p=P_1, n=n_1, t=T_1, bearing_D=52, bearing_T=16.25)
+# 查表6-7得对应轴承尺寸:代号,D,T,D_a
+axis_1 = ax.HighSpeedShaft(num=1, d=d_m1, phi_r=1 / 3, p=P_1, n=n_1, t=T_1,
+                           bearing_id=30205, bearing_D=52, bearing_T=16.25, bearing_D_a=45)
 
 console.print("（二）中速轴的设计计算", style='#FF6100')
 axis_2 = ax.MediumSpeedShaft(num=2, delta_1=bevel_gear_C.delta_1, beta=beta, d_1=d_m2, d_2=helical_spur_gear_D.d_1,
-                             p=P_2, n=n_2, t=T_2, bearing_D=62, bearing_T=18.25)
+                             p=P_2, n=n_2, t=T_2, bearing_id=30305, bearing_D=62, bearing_T=18.25, bearing_D_a=54.5)
 
 console.print("（三）低速轴的设计计算", style='#FF6100')
 axis_3 = ax.LowSpeedShaft(num=3, d=helical_spur_gear_D.d_2, phi_r=1 / 3,
-                          p=P_3, n=n_3, t=T_3, bearing_D=100, bearing_T=27.25)
+                          p=P_3, n=n_3, t=T_3, bearing_id=30309, bearing_D=100, bearing_T=27.25, bearing_D_a=88.5)
 
 console.print("九、滚动轴承的校核", style="red")
 console.print("（一）高速轴上的轴承", style='#FF6100')
@@ -309,14 +312,23 @@ low_speed_key = ky.low_speed_key(part_1="II_III", d_1=axis_3.d_ii_iii, L_1=axis_
                                  T_3=axis_3.T,
                                  part_2="VI_VII", d_2=axis_3.d_vi_vii, L_2=axis_3.l_vi_vii, b_2=12, h_2=8, l_2=45)
 
-console.print("十一、箱体及附属部件设计设计:", style="red")
+console.print("十一、箱体及附属部件设计设计", style="red")
 a = (helical_spur_gear_D.d_1 + helical_spur_gear_D.d_2) / 2  # 求圆柱齿轮中心距
 box = bx.box(a=a)
 accessories = bx.accessories(delta=box.delta, delta_1=box.delta_1, C_1=box.C_1, C_2=box.C_2, a=a, d=box.d_1)
 
-console.print("十一、箱体及附属部件设计设计:", style="red")
+console.print("十二、润滑与密封", style="red")
 print('略')
 
 console.print("十三、端盖设计", style="red")
+console.print('参照参考文献[2]P166表11-10', style='green')
+console.print('1、高速轴轴承盖设计', style='#FF6100')
+end_cap_1 = ec.HighSpeedEndCap(D=axis_1.bearing_D, D_a=axis_1.bearing_D_a)
 
+console.print('2、中速轴轴承盖设计：', style='#FF6100')
+end_cap_2 = ec.MediumSpeedEndCap(D=axis_2.bearing_D)
+
+console.print('3、低速轴轴承盖设计', style='#FF6100')
+end_cap_3 = ec.LowSpeedEndCap(D=axis_3.bearing_D)
+console.print('至此，整个圆锥——斜齿轮齿轮减速器设计完毕！', style='green')
 print('未完待续。。。。。。。。。。')
