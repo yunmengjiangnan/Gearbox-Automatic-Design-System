@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3942b2d-eb36-4027-b808-2f44948a02d3" name="Changes" comment="Changes">
-      <change afterPath="$PROJECT_DIR$/rich_export.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolling_bearing.py" beforeDir="false" afterPath="$PROJECT_DIR$/rolling_bearing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/优化.py" beforeDir="false" />
-    </list>
+    <list default="true" id="c3942b2d-eb36-4027-b808-2f44948a02d3" name="Changes" comment="Changes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -178,7 +172,7 @@
       <workItem from="1645889425456" duration="1782000" />
       <workItem from="1645962996799" duration="2653000" />
       <workItem from="1646100754184" duration="1136000" />
-      <workItem from="1646183167613" duration="2500000" />
+      <workItem from="1646183167613" duration="2895000" />
     </task>
     <servers />
   </component>
