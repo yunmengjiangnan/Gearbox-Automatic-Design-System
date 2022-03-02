@@ -10,15 +10,14 @@ from rich import print
 from rich.console import Console
 from rich.table import Table
 
-import axis
 import axis as ax
+import box_and_accessories as bx
+import end_cap as ec
 import gear_drive as gd
 import gear_ratio as gr
 import key as ky
 import motor as mt
 import transmission_parameters as tp
-import box_and_accessories as bx
-import end_cap as ec
 
 # 已知条件
 
@@ -250,24 +249,24 @@ L_P = round(L_P0)
 f_I = 0.23737  # 查表，并用差值法求得
 float_a = f_I * P * (2 * L_P - (Z_1 + Z_2))
 a = round(float_a)
-print('（4）计算链节数和中心距'
-      '\n      初选中心距a_0=(30-50)p=', a_0_min, ' ~ ', a_0_max, 'mm,取a_0 =', a_0, 'mm'
-                                                                               '\n      相应的链长节数L_P0 =', L_P0, 'mm'
-                                                                                                              '\n      取链长节数L_P=',
-      L_P,
+print('（4）计算链节数和中心距\n      初选中心距a_0=(30-50)p=', a_0_min,
+      ' ~ ', a_0_max,
+      'mm,取a_0 =', a_0, 'mm\n      相应的链长节数L_P0 =', L_P0,
+      'mm\n      取链长节数L_P=', L_P,
       ' (L_P-Z_1)/(Z_2-Z_1 )=', (L_P - Z_1) / (Z_2 - Z_1),
       '\n      查表,并用差值法得中心距系数f_I=', f_I,
-      '\n      a=f_I * P[2L_P-(Z_1+Z_2 )]=', float_a, 'mm',
-      '\n      取整a =', a, 'mm')
+      '\n      a=f_I * P[2L_P-(Z_1+Z_2 )]=', float_a,
+      'mm\n      取整a =', a, 'mm')
 
 v = (n_3 * Z_1 * P) / 60 / 1000
-print('(5)计算链速，确定润滑方式，v=(n_3 z_1 p)/(60×1000)=', v, 'm/s'
-                                                    '\n       由v=', v, 'm/s和链号20A—1 查参考文献[2]图9-4 采用滴油润滑')
+print('(5)计算链速，确定润滑方式，v=(n_3 z_1 p)/(60×1000)=', v,
+      'm/s\n       由v=', v, 'm/s和链号20A—1 查参考文献[2]图9-4 采用滴油润滑')
 F_e = 1000 * P_4 * 1000 / v
 K_FP = 1.15
 F_P = K_FP * F_e
-print('(6)计算轴向力，有效圆周力为：F_e = 1000 * P_4 / v =', F_e, 'N'
-                                                     '\n        链轮水平布置时轴力系数K_FP =', K_FP, '则周向力为F_p ≈', F_P, 'N')
+print('(6)计算轴向力，有效圆周力为：F_e = 1000 * P_4 / v =', F_e,
+      'N\n        链轮水平布置时轴力系数K_FP =', K_FP,
+      '则周向力为F_p ≈', F_P, 'N')
 
 console.print("八、轴的设计计算", style="red")
 print('(在本次设计中为减轻设计负担，只进行低速轴的强度校核)',
