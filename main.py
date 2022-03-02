@@ -331,4 +331,8 @@ end_cap_2 = ec.MediumSpeedEndCap(D=axis_2.bearing_D)
 console.print('3、低速轴轴承盖设计', style='#FF6100')
 end_cap_3 = ec.LowSpeedEndCap(D=axis_3.bearing_D)
 console.print('至此，整个圆锥——斜齿轮齿轮减速器设计完毕！', style='green')
+
+console.print('十四、装配尺寸说明', style='red')
+console.print('1、圆柱齿轮中心距a =', a, 'mm。', style='#FF6100')
+
 print('未完待续。。。。。。。。。。')
