@@ -10,18 +10,21 @@ from rich import print
 from rich.console import Console
 from rich.table import Table
 
+import axis
 import axis as ax
 import gear_drive as gd
 import gear_ratio as gr
 import key as ky
 import motor as mt
 import transmission_parameters as tp
+import box_and_accessories as bx
+import end_cap as ec
 
 # 已知条件
 
-F = 8
-v = 0.37
-d = 351
+F = 5
+v = 0.8
+d = 390
 # 实例化一个输出控制端
 console = Console()
 console.print("一、设计任务：", style="red")
@@ -31,13 +34,16 @@ table_1.add_column('组数')
 table_1.add_column('输送链的牵引力F（KG）')
 table_1.add_column('输送链的速度v(m/s)')
 table_1.add_column('输送链链轮节圆直径d(mm)')
-table_1.add_row('第六组', '8', '0.37', '351')
+table_1.add_row('第六组', str(F), str(v), str(d))
 print(table_1)
 # 计算工作寿命
+year = 10
+day = 300
+hour = 12
 print('注：1.链板式输送机工作时，运转方向不变，工作载荷稳定。'
-      '\n    2.工作寿命15年，每年300个工作日，每日工作16小时。')
-t = 15 * 300 * 16
-print('工作寿命：t=15×300×16h=7.2×10^4 h')
+      '\n    2.工作寿命', year, '年，每年', day, '个工作日，每日工作', hour, '小时。')
+t = year * day * hour
+print('工作寿命：t=', year, '×', day, '×', hour, 'h = ', '%e' % t, 'h')
 console.print("二、传动方案的拟定及说明", style="red")
 print('如上图课程设计任务书上布置简图所示，传动方案采用圆锥圆柱齿轮减速箱：'
       '\n圆锥齿轮置于高速极，以免使圆锥齿轮尺寸过大加工困难；'
@@ -57,8 +63,8 @@ P_d = mt.Input_Power(P_W, eta)
 # print('选YX3系列132S-4型号电动机，主要技术数据如下：'
 #       '\n额定功率：5.5 kw'
 #       '\n满载转速：1440r/min')
-print('选Y112M-4型号电动机，主要技术数据如下：'
-      '\n额定功率：4 kw'
+print('选YX3系列132S-4型号电动机，主要技术数据如下：'
+      '\n额定功率：5.5 kw'
       '\n满载转速：1440 r/min')
 
 # 四、传动装置的总传动比及其分配
@@ -246,8 +252,8 @@ float_a = f_I * P * (2 * L_P - (Z_1 + Z_2))
 a = round(float_a)
 print('（4）计算链节数和中心距'
       '\n      初选中心距a_0=(30-50)p=', a_0_min, ' ~ ', a_0_max, 'mm,取a_0 =', a_0, 'mm'
-      '\n      相应的链长节数L_P0 =', L_P0, 'mm'
-      '\n      取链长节数L_P=',
+                                                                               '\n      相应的链长节数L_P0 =', L_P0, 'mm'
+                                                                                                              '\n      取链长节数L_P=',
       L_P,
       ' (L_P-Z_1)/(Z_2-Z_1 )=', (L_P - Z_1) / (Z_2 - Z_1),
       '\n      查表,并用差值法得中心距系数f_I=', f_I,
@@ -271,15 +277,17 @@ print('(在本次设计中为减轻设计负担，只进行低速轴的强度校
       '，弯曲疲劳极限σ_-1 = 275MPa'
       '，许用弯曲应力[σ_-1] = 60MPa')
 console.print("（一）高速轴的设计计算", style='#FF6100')
-axis_1 = ax.HighSpeedShaft(num=1, d=d_m1, phi_r=1/3, p=P_1, n=n_1, t=T_1, bearing_D=52, bearing_T=16.25)
+# 查表6-7得对应轴承尺寸:代号,D,T,D_a
+axis_1 = ax.HighSpeedShaft(num=1, d=d_m1, phi_r=1 / 3, p=P_1, n=n_1, t=T_1,
+                           bearing_id=30205, bearing_D=52, bearing_T=16.25, bearing_D_a=45)
 
 console.print("（二）中速轴的设计计算", style='#FF6100')
 axis_2 = ax.MediumSpeedShaft(num=2, delta_1=bevel_gear_C.delta_1, beta=beta, d_1=d_m2, d_2=helical_spur_gear_D.d_1,
-                             p=P_2, n=n_2, t=T_2, bearing_D=62, bearing_T=18.25)
+                             p=P_2, n=n_2, t=T_2, bearing_id=30305, bearing_D=62, bearing_T=18.25, bearing_D_a=54.5)
 
 console.print("（三）低速轴的设计计算", style='#FF6100')
-axis_3 = ax.LowSpeedShaft(num=3, d=helical_spur_gear_D.d_2, phi_r=1/3,
-                          p=P_3, n=n_3, t=T_3, bearing_D=100, bearing_T=27.25)
+axis_3 = ax.LowSpeedShaft(num=3, d=helical_spur_gear_D.d_2, phi_r=1 / 3,
+                          p=P_3, n=n_3, t=T_3, bearing_id=30309, bearing_D=100, bearing_T=27.25, bearing_D_a=88.5)
 
 console.print("九、滚动轴承的校核", style="red")
 console.print("（一）高速轴上的轴承", style='#FF6100')
@@ -304,6 +312,27 @@ low_speed_key = ky.low_speed_key(part_1="II_III", d_1=axis_3.d_ii_iii, L_1=axis_
                                  T_3=axis_3.T,
                                  part_2="VI_VII", d_2=axis_3.d_vi_vii, L_2=axis_3.l_vi_vii, b_2=12, h_2=8, l_2=45)
 
-console.print("十一、箱体及附属部件设计设计:", style="red")
-console.print('参考参考文献表11－1(铸铁减速器箱体结构尺寸)，初步取如下尺寸：', style='#FF6100')
+console.print("十一、箱体及附属部件设计设计", style="red")
+a = (helical_spur_gear_D.d_1 + helical_spur_gear_D.d_2) / 2  # 求圆柱齿轮中心距
+box = bx.box(a=a)
+accessories = bx.accessories(delta=box.delta, delta_1=box.delta_1, C_1=box.C_1, C_2=box.C_2, a=a, d=box.d_1)
+
+console.print("十二、润滑与密封", style="red")
+print('略')
+
+console.print("十三、端盖设计", style="red")
+console.print('参照参考文献[2]P166表11-10', style='green')
+console.print('1、高速轴轴承盖设计', style='#FF6100')
+end_cap_1 = ec.HighSpeedEndCap(D=axis_1.bearing_D, D_a=axis_1.bearing_D_a)
+
+console.print('2、中速轴轴承盖设计：', style='#FF6100')
+end_cap_2 = ec.MediumSpeedEndCap(D=axis_2.bearing_D)
+
+console.print('3、低速轴轴承盖设计', style='#FF6100')
+end_cap_3 = ec.LowSpeedEndCap(D=axis_3.bearing_D)
+console.print('至此，整个圆锥——斜齿轮齿轮减速器设计完毕！', style='green')
+
+console.print('十四、装配尺寸说明', style='red')
+console.print('1、圆柱齿轮中心距a =', a, 'mm。', style='#FF6100')
+
 print('未完待续。。。。。。。。。。')

@@ -25,7 +25,8 @@ def Lh(n, c, p, epsilon):
 
 # 30205型圆锥滚子轴承
 class RollingBearing:
-    def __init__(self, f_r1=2389.11, f_r2=700.43, F_ae=700.75, F_a1=597.28, n=1440, t=7.2*10**4):
+    def __init__(self, F_AZ, F_AY, F_BZ, F_BY,
+                 f_r1=2389.11, f_r2=700.43, F_ae=700.75, F_a1=597.28, n=1440, t=7.2*10**4):
         self.C = 32.2
         self.e = 0.37
         self.Y = 1.6

@@ -31,7 +31,7 @@ def the_force_acting_on_the_helical_gear(d, T, alpha=20, delta_1=14.15):
 
 
 class HighSpeedShaft:
-    def __init__(self, num, d, phi_r, p, n, t, bearing_D, bearing_T):
+    def __init__(self, num, d, phi_r, p, n, t, bearing_id, bearing_D, bearing_T, bearing_D_a):
         console.print('1、求输入轴上的功率P', num, '、转速n', num, '和转矩T', num, style="yellow")
         self.P = p
         self.n = n
@@ -83,8 +83,10 @@ class HighSpeedShaft:
         self.d_vii_viii = self.d_i_ii
 
         self.bearing_d = self.d_iii_iv
+        self.bearing_id = bearing_id
         self.bearing_D = bearing_D
         self.bearing_T = bearing_T
+        self.bearing_D_a = bearing_D_a
 
         self.l_i_ii = 36
         self.l_ii_iii = 32
@@ -100,11 +102,13 @@ class HighSpeedShaft:
               '\n        d_I_II =', self.d_i_ii, 'L_I_II =', self.l_i_ii,
               '\n        d_II_III =', self.d_ii_iii, 'L_II_III =', self.l_ii_iii,
               '\n        Ⅲ~Ⅳ处与滚动轴承配合，考虑到滚动轴承是标准件，内径为5的倍数，故取',
-              '\n        d_III_IV =', self.d_iii_iv,
-              '\n        选取相应的轴承，因轴承同时受有径向力和轴向力的作用，故选用单列圆锥滚子轴承。参考工作要求，并根据',
-              'd_III_IV =', self.d_iii_iv, '，查参考文献P：79表6－７，取０基本游隙组、标准精度级的单列圆锥滚子轴承30205，其尺寸为',
-              '\n        d × D × T =', self.d_iii_iv, 'mm ×', self.bearing_D, 'mm × ', self.bearing_T, 'mm',
-              '\n        因此取L_III_IV =', self.l_iii_iv, 'mm',
+              '\n        d_III_IV =', self.d_iii_iv)
+        console.print('        选取相应的轴承，因轴承同时受有径向力和轴向力的作用，故选用单列圆锥滚子轴承。'
+                      '\n        参考工作要求，并根据d_III_IV =', self.d_iii_iv,
+                      '\n        ，查参考文献P：79表6－７，取０基本游隙组、标准精度级的单列圆锥滚子轴承', self.bearing_id,
+                      '\n        ，其尺寸为d × D × T =', self.d_iii_iv,
+                      'mm ×', self.bearing_D, 'mm × ', self.bearing_T, 'mm', style='green')
+        print('        因此取L_III_IV =', self.l_iii_iv, 'mm',
               '\n        同理，d_V_VI =', self.d_v_vi, 'mm   L_V_VI =', self.l_v_vi, 'mm',
               '\n        取   d_IV_V =', self.d_iv_v, 'mm   L_IV_V =', self.l_iv_v, 'mm',
               '\n             d_VI_VII =', self.d_vi_vii, 'mm    L_VI_VII =', self.l_vi_vii, 'mm',
@@ -130,7 +134,7 @@ class HighSpeedShaft:
 
 
 class MediumSpeedShaft:
-    def __init__(self, num, d_1, d_2, p, n, t, delta_1, beta, bearing_D, bearing_T):
+    def __init__(self, num, d_1, d_2, p, n, t, delta_1, beta, bearing_id, bearing_D, bearing_T, bearing_D_a):
         console.print('1、求输入轴上的功率P', num, '、转速n', num, '和转矩T', num, style="yellow")
         self.P = p
         self.n = n
@@ -179,8 +183,10 @@ class MediumSpeedShaft:
         self.d_vi_vii = 48  # 不会
 
         self.bearing_d = self.d_i_ii
+        self.bearing_id = bearing_id
         self.bearing_D = bearing_D
         self.bearing_T = bearing_T
+        self.bearing_D_a = bearing_D_a
 
         self.l_i_ii = 20
         self.l_ii_iii = 30
@@ -188,18 +194,25 @@ class MediumSpeedShaft:
         self.l_iv_v = 20
         self.l_v_vi = 40
         self.l_vi_vii = 48
-        print('   d_I_II = d_VI_VII', self.d_i_ii, 'L_I_II =', self.l_i_ii, 'mm， L_VI_VII =', self.l_vi_vii, 'mm',
-              '\n   同时选取相应的轴承，因轴承同时受有径向力和轴向力的作用，故选用单'
-              '\n   列圆锥滚子轴承。参考文献表6－７，取０基本游隙组、标准精度级'
-              '\n   的单列圆锥滚子轴承30305，其尺寸为'
-              '\n   d × D × T =', self.d_i_ii, 'mm ×', self.bearing_D, 'mm × ', self.bearing_T, 'mm'
-                                                                                                '\n   d_II_III =',
-              self.d_ii_iii, 'mm     L_II_III =', self.l_ii_iii, 'mm（要考虑轴的整体布置）'
-                                                                 '\n   d_III_IV =', self.d_iii_iv, 'mm   L_III_IV =',
-              self.l_iii_iv, 'mm（小斜齿轮部分数据）'
-                             '\n   d_IV_V =', self.d_iv_v, 'mm       L_IV_V =', self.l_iv_v, 'mm'
-                                                                                             '\n   d_V_VI =',
-              self.d_v_vi, 'mm       L_V_VI =', self.l_v_vi, 'mm')
+        print('   d_I_II = d_VI_VII', self.d_i_ii,
+              'L_I_II =', self.l_i_ii,
+              'mm， L_VI_VII =', self.l_vi_vii,
+              'mm')
+        console.print('   同时选取相应的轴承，因轴承同时受有径向力和轴向力的作用，故选用单列圆锥滚子轴承。'
+                      '\n   参考文献表6－７，取０基本游隙组、标准精度级的单列圆锥滚子轴承', self.bearing_id,
+                      '，其尺寸为\n   d × D × T =', self.d_i_ii,
+                      'mm ×', self.bearing_D,
+                      'mm × ', self.bearing_T,
+                      'mm', style='green')
+        print('   d_II_III =', self.d_ii_iii,
+              'mm     L_II_III =', self.l_ii_iii,
+              'mm（要考虑轴的整体布置）\n   d_III_IV =', self.d_iii_iv,
+              'mm   L_III_IV =', self.l_iii_iv,
+              'mm（小斜齿轮部分数据）\n   d_IV_V =', self.d_iv_v,
+              'mm       L_IV_V =', self.l_iv_v,
+              'mm\n   d_V_VI =', self.d_v_vi,
+              'mm       L_V_VI =', self.l_v_vi,
+              'mm')
 
         self.V_VI_b = 8
         self.V_VI_h = 7
@@ -216,7 +229,7 @@ class MediumSpeedShaft:
 
 
 class LowSpeedShaft:
-    def __init__(self, num, d, phi_r, p, n, t, bearing_D, bearing_T):
+    def __init__(self, num, d, phi_r, p, n, t, bearing_id, bearing_D, bearing_T, bearing_D_a):
         console.print('1、求输入轴上的功率P', num, '、转速n', num, '和转矩T', num, style="yellow")
         self.P = p
         self.n = n
@@ -261,8 +274,10 @@ class LowSpeedShaft:
         self.d_vi_vii = 42  # 不会
 
         self.bearing_d = self.d_iii_iv
+        self.bearing_id = bearing_id
         self.bearing_D = bearing_D
         self.bearing_T = bearing_T
+        self.bearing_D_a = bearing_D_a
 
         self.l_i_ii = 53
         self.l_ii_iii = 48
@@ -279,16 +294,19 @@ class LowSpeedShaft:
               '\n   d_IV_V =', self.d_iv_v, 'mm   L_IV_V =', self.l_iv_v, 'mm',
               '\n   d_VI_VII =', self.d_vi_vii, 'mm    L_VI_VII =', self.l_vi_vii, 'mm(满足小链轮的安装)',
               '\n   轴的I-II、V-VI处套有轴承，故同时选取此处的轴承。因轴承同时受有径'
-              '\n   向力和轴向力的作用，故选用单列圆锥滚子轴承。参考文献表6－７，'
-              '\n   由轴承产品目录中初步选取0基本游隙组、标准精度级的单列圆锥滚子轴'
-              '\n   承30309型号，其尺寸为d×D×T =', self.bearing_d, 'mm ×', self.bearing_D, 'mm ×', self.bearing_T, 'mm')
+              '\n   向力和轴向力的作用，故选用单列圆锥滚子轴承。参考文献表6－７，')
+        console.print('   由轴承产品目录中初步选取0基本游隙组、标准精度级的单列圆锥滚子轴'
+                      '\n   承30309型号，其尺寸为d×D×T =', self.bearing_d,
+                      'mm ×', self.bearing_D,
+                      'mm ×', self.bearing_T,
+                      'mm', style='green')
         console.print("5、求轴上的载荷", style="yellow")
         self.a = 21.3
         self.L_1 = 33
         self.L_2 = 118
         self.L_3 = 59
         print('   首先根据轴的结构图作出轴的计算简图。在确定轴承支点位置时，从参考'
-              '\n   文献中查取a值。对于30309型圆锥滚子轴承，查得a=', self.a, 'mm。因此，',
+              '\n   文献中查取a值。对于', self.bearing_id, '型圆锥滚子轴承，查得a=', self.a, 'mm。因此，',
               '\n   L_1 = AB =', self.L_1, 'mm,    L_2 = BC =', self.L_2, 'mm',
               '\n   L_3 = CD =', self.L_3, 'mm',
               '\n根据轴的计算简图作出轴的弯矩图和扭矩图',
@@ -303,7 +321,7 @@ class LowSpeedShaft:
         self.M_CY = -242218.6
         self.M_BY2 = -45625.8
         self.M_1 = abs(self.M_CY)
-        self.M_2 = math.sqrt(self.M_Z**2 + self.M_BY2**2)
+        self.M_2 = math.sqrt(self.M_Z ** 2 + self.M_BY2 ** 2)
         self.T_3 = 311.31
 
         table = Table(show_header=True, header_style='bold magenta')
@@ -335,12 +353,15 @@ class LowSpeedShaft:
         self.vi_vii_h = 8
         self.vi_vii_l = 45
 
-        print('   II-III段采用普通平键联接，按d_II_III =', self.d_ii_iii, ',由参考文献表4-1查得平键的截面'
-              '\n   b =', self.ii_iii_b, 'mm，h =', self.ii_iii_h,
-              'mm，由该轴段长度取L =', self.ii_iii_l, 'mm 。'
-              '\n   VI-VII段采用普通平键联接，按d_VI_VII =', self.d_vi_vii, '，由参考文献表4-1查得平键的'
-              '\n   截面b =', self.vi_vii_b, 'mm，h =', self.vi_vii_h, 'mm，由该轴段长度取L =', self.vi_vii_l, 'mm。'
-              '\n   同时为了保证齿轮与轴配合得有良好得对中性，故选择齿轮轮毂与轴的配合选H7/n6。')
+        print('   II-III段采用普通平键联接，按d_II_III =', self.d_ii_iii,
+              ',由参考文献表4-1查得平键的截面\n   b =', self.ii_iii_b,
+              'mm，h =', self.ii_iii_h,
+              'mm，由该轴段长度取L =', self.ii_iii_l,
+              'mm 。\n   VI-VII段采用普通平键联接，按d_VI_VII =', self.d_vi_vii,
+              '，由参考文献表4-1查得平键的\n   截面b =', self.vi_vii_b,
+              'mm，h =', self.vi_vii_h,
+              'mm，由该轴段长度取L =', self.vi_vii_l,
+              'mm。\n   同时为了保证齿轮与轴配合得有良好得对中性，故选择齿轮轮毂与轴的配合选H7/n6。')
         console.print("   2)滚动轴承与轴的周向定位，是借过渡配合来保证的，此处选轴的尺寸公差为m6。", style="green")
         console.print("8、轴上倒角与圆角", style="yellow")
         print('   根据参考文献表，取轴端倒角C1，各轴肩处的圆角半径取C0.5。')
@@ -357,7 +378,8 @@ if __name__ == '__main__':
     axis_1 = HighSpeedShaft(num=1, d=58.5, phi_r=1 / 3, p=3.50, n=1440, t=22.97, bearing_T=52, bearing_D=16.25)
 
     console.print("（二）中速轴的设计计算", style='#FF6100')
-    axis_2 = MediumSpeedShaft(num=2, delta_1=18.44, beta=0.255, d_1=150, d_2=49.5, p=3.21, n=480, t=63.87, bearing_D=62, bearing_T=18.25)
+    axis_2 = MediumSpeedShaft(num=2, delta_1=18.44, beta=0.255, d_1=150, d_2=49.5, p=3.21, n=480, t=63.87, bearing_D=62,
+                              bearing_T=18.25)
 
     console.print("（三）低速轴的设计计算", style='#FF6100')
-    axis_3 = LowSpeedShaft(num=3, d=247.55, phi_r=1/3, p=3.08, n=96, t=306.73, bearing_D=100, bearing_T=27.25)
+    axis_3 = LowSpeedShaft(num=3, d=247.55, phi_r=1 / 3, p=3.08, n=96, t=306.73, bearing_D=100, bearing_T=27.25)
