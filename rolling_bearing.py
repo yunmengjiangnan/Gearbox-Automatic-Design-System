@@ -4,8 +4,7 @@
 # @File : main.py
 # @Software: PyCharm
 
-import numpy as np
-from math import pi, atan, cos, tan, sqrt, e
+from math import sqrt, e
 from rich import print
 from rich.console import Console
 

@@ -5,7 +5,6 @@
 # @Software: PyCharm
 from math import pi
 from rich import print
-# from rich.console import Console
 
 
 # 三、电动机的选择

@@ -121,13 +121,15 @@ class HighSpeedShaft:
         self.vii_viii_b = 6
         self.vii_viii_h = 6
         self.vii_viii_l = 22
-        print('I-II段平键，按d_I_II =', self.d_i_ii, ',由参考文献表4-1查得平键的截面'
-                                                '\nb =', self.i_ii_b, 'mm，h =', self.i_ii_h, 'mm，由该轴段长度取L =',
-              self.i_ii_l, 'mm 。'
-                           '\nVII-VIII段平键，按d_I_II =', self.d_vii_viii, '，由参考文献表4-1查得平键的'
-                                                                       '\n截面b =', self.vii_viii_b, 'mm，h =',
-              self.vii_viii_h, 'mm，由该轴段长度取L =', self.vii_viii_l, 'mm。'
-                                                                 '\n同时为了保证齿轮与轴配合得有良好得对中性，故选择齿轮轮毂与轴的配合选H7/n6。')
+        print('I-II段平键，按d_I_II =', self.d_i_ii,
+              ',由参考文献表4-1查得平键的截面\nb =', self.i_ii_b,
+              'mm，h =', self.i_ii_h,
+              'mm，由该轴段长度取L =', self.i_ii_l,
+              'mm 。\nVII-VIII段平键，按d_I_II =', self.d_vii_viii,
+              '，由参考文献表4-1查得平键的\n截面b =', self.vii_viii_b,
+              'mm，h =', self.vii_viii_h,
+              'mm，由该轴段长度取L =', self.vii_viii_l,
+              'mm。\n同时为了保证齿轮与轴配合得有良好得对中性，故选择齿轮轮毂与轴的配合选H7/n6。')
         console.print("2)滚动轴承与轴的周向定位，是借过渡配合来保证的，此处选轴的尺寸公差为m6。", style="green")
         console.print("6、轴上倒角与圆角", style="yellow")
         print('根据参考文献表，取轴端倒角C1，各轴肩处的圆角半径取C0.5。')
@@ -167,9 +169,9 @@ class MediumSpeedShaft:
         self.d_min = round(self.d * 1.15 / 5) * 5
         self.K_A = 1.5
         self.T_ca = self.K_A * self.T * 1000
-        print('因为选取轴的材料为45钢调质处理，根据参考文献[2]表15-3，取A_0 =', self.A_0, '于是得',
-              'd_min = A_0 * cbrt(P / n) =', self.d, 'mm'
-                                                     '\n考虑到这根轴有一个键，设计值加大10%，又因为最小直径处为两端，因为与轴承相连，所以取d_min =', self.d_min,
+        print('因为选取轴的材料为45钢调质处理，根据参考文献[2]表15-3，取A_0 =', self.A_0,
+              '于是得d_min = A_0 * cbrt(P / n) =', self.d,
+              'mm\n考虑到这根轴有一个键，设计值加大10%，又因为最小直径处为两端，因为与轴承相连，所以取d_min =', self.d_min,
               'mm。')
 
         console.print("4、轴的结构设计", style="yellow")
