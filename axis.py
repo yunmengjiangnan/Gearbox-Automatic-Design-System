@@ -281,12 +281,12 @@ class LowSpeedShaft:
         self.bearing_T = bearing_T
         self.bearing_D_a = bearing_D_a
 
-        self.l_i_ii = 53
-        self.l_ii_iii = 48
-        self.l_iii_iv = 15
-        self.l_iv_v = 70
-        self.l_v_vi = 80
-        self.l_vi_vii = 56
+        self.l_i_ii = 37.25
+        self.l_ii_iii = 59
+        self.l_iii_iv = 6.3
+        self.l_iv_v = 48.2
+        self.l_v_vi = 59.25
+        self.l_vi_vii = 58
         # 长度真不知道咋算的
 
         self.D = 52
@@ -315,6 +315,7 @@ class LowSpeedShaft:
               '\n(1)受力简图',
               '\n   从轴的结构图以及弯矩和扭矩图可以看出截面C是轴的危险截面。'
               '\n   先计算出各截面的值列于下表。')
+
         self.F_AZ = 199.6
         self.F_CZ = 55.8
         self.F_AY = -1382.6
@@ -324,7 +325,7 @@ class LowSpeedShaft:
         self.M_BY2 = -45625.8
         self.M_1 = abs(self.M_CY)
         self.M_2 = math.sqrt(self.M_Z ** 2 + self.M_BY2 ** 2)
-        self.T_3 = 311.31
+        self.T_3 = bearing_T
 
         table = Table(show_header=True, header_style='bold magenta')
         table.add_column('载荷')
@@ -341,9 +342,20 @@ class LowSpeedShaft:
 
         console.print("6、按弯扭合成应力校核轴的强度", style="yellow")
         self.alpha = 0.6
+        self.W = 0.1 * 45**3
+        self.sigma_ca = math.sqrt(self.M_1**2 + (self.alpha * self.T_3)**2) / self.W
         print('   进行校核时，通常只校核轴上承受最大弯矩和扭矩的截面（即危险'
               '\n   截面B）的强度，根据式参考文献15-5及上表中的数值，并取α =', self.alpha, '，轴的计算应力',
-              '\n   σ_ca = ')
+              '\n   σ_ca = ', self.sigma_ca,
+              'MPa')
+        if self.sigma_ca < 60:
+            print('前已选定轴的材料为45钢，调质处理。'
+                  '\n由参考文献[2]表15-1查得[σ_-1]=60MPa。'
+                  '\n因此σ_ca < [σ_-1]，故安全。')
+        else:
+            print('前已选定轴的材料为45钢，调质处理。'
+                  '\n由参考文献[2]表15-1查得[σ_-1]=60MPa。'
+                  '\n因此σ_ca > [σ_-1]，故不安全，请检查！！！！！！')
 
         console.print("7、轴上零件的周向固定", style="yellow")
         console.print("   1)齿轮与轴的周向定位采用平键联接。", style="green")

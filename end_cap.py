@@ -39,7 +39,7 @@ class BearingCap:
         self.D_2 = self.D_0 + 2.5 * self.d_3
         self.D_4 = self.D - 10
         self.D_6 = self.D - 3
-        self.e_1 = self.e
+        self.e_1 = round(self.e * 10) / 10
         self.D_5 = self.D_0 - 3 * self.d_3
         self.m = 9
 

@@ -18,6 +18,7 @@ import gear_ratio as gr
 import key as ky
 import motor as mt
 import transmission_parameters as tp
+import rolling_bearing as rb
 
 # 已知条件
 
@@ -290,7 +291,12 @@ axis_3 = ax.LowSpeedShaft(num=3, d=helical_spur_gear_D.d_2, phi_r=1 / 3,
 
 console.print("九、滚动轴承的校核", style="red")
 console.print("（一）高速轴上的轴承", style='#FF6100')
-# rolling_bearing_1 = RollingBearing()
+rolling_bearing_1 = rb.RollingBearing_1(n=n_1, F_r=108.49, t=t)
+console.print("（二）中速轴上的轴承", style='#FF6100')
+rolling_bearing_2 = rb.RollingBearing_2(n=n_2, F_r=700.75, t=t)
+console.print("（三）低速轴上的轴承", style='#FF6100')
+rolling_bearing_3 = rb.RollingBearing_3(n=n_3, F_AZ=axis_3.F_AZ, F_AY=axis_3.F_AY, F_CZ=axis_3.F_CZ, F_CY=axis_3.F_CY,
+                                        F_r=648.71)
 
 console.print("十、键的选择及强度校核", style="red")
 print('  键、轴、轮毂材料都是钢，由参考文献表6-2查得许用挤压应力'
@@ -307,9 +313,9 @@ console.print("(二)中速轴上的键联接", style='#FF6100')
 mid_speed_key = ky.medium_speed_key(part="V_VI", d=axis_2.d_v_vi, L=axis_2.l_v_vi, b=8, h=7, l=32, T_2=axis_2.T)
 
 console.print("(三)低速轴上的键联接", style='#FF6100')
-low_speed_key = ky.low_speed_key(part_1="II_III", d_1=axis_3.d_ii_iii, L_1=axis_3.l_ii_iii, b_1=16, h_1=10, l_1=40,
+low_speed_key = ky.low_speed_key(part_1="II_III", d_1=axis_3.d_ii_iii, L_1=axis_3.l_ii_iii, b_1=16, h_1=10, l_1=45,
                                  T_3=axis_3.T,
-                                 part_2="VI_VII", d_2=axis_3.d_vi_vii, L_2=axis_3.l_vi_vii, b_2=12, h_2=8, l_2=45)
+                                 part_2="VI_VII", d_2=axis_3.d_vi_vii, L_2=axis_3.l_vi_vii, b_2=12, h_2=8, l_2=56)
 
 console.print("十一、箱体及附属部件设计设计", style="red")
 a = (helical_spur_gear_D.d_1 + helical_spur_gear_D.d_2) / 2  # 求圆柱齿轮中心距
