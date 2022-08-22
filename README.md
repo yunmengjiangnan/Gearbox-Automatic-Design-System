@@ -1,4 +1,4 @@
-# Gearbox-Automatic-Design-System1212
+# Gearbox-Automatic-Design-System
 
 ## 简介
 
